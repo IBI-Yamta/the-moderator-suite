@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #1e293b;
+    background-color: #f0f2f5;
+  }
+}
+
+/* Examination Times New Roman Typography & 1.15 line spacing */
+.font-times {
+  font-family: "Times New Roman", Times, "Liberation Serif", serif;
+}
+
+.leading-exam {
+  line-height: 1.15;
+}
+
+.font-size-10pt {
+  font-size: 10pt;
+}
+
+.font-size-11pt {
+  font-size: 11pt;
+}
+
+.font-size-12pt {
+  font-size: 12pt;
+}
+
+.font-size-13pt {
+  font-size: 13pt;
+}
+
+/* Exam Paper Document Container - High-fidelity A4 document with Professional shadow */
+.exam-page {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-height: 297mm;
+  width: 210mm;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Print Optimization */
+@media print {
+  body {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .exam-page {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10mm 12mm !important;
+    border: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+

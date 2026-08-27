@@ -1,0 +1,95 @@
+export interface OptionItem {
+  key: string; // 'a' | 'b' | 'c' | 'd'
+  text: string;
+}
+
+export interface ObjectiveQuestion {
+  id: number;
+  questionNumber: number;
+  questionText: string;
+  options: OptionItem[];
+  correctAnswer?: string;
+  marks?: number;
+}
+
+export interface EssaySubQuestion {
+  label: string; // e.g. "1a", "i", "ii", "1b"
+  text: string;
+  marks?: string; // e.g. "[2 marks]"
+}
+
+export interface EssayQuestion {
+  questionNumber: string; // e.g. "1", "2", "3"
+  text: string;
+  marks?: string; // e.g. "[10 marks]"
+  subQuestions: EssaySubQuestion[];
+}
+
+export interface ExamSectionA {
+  title: string; // e.g. "SECTION A: OBJECTIVE QUESTIONS [30 MARKS]"
+  instruction: string; // e.g. "Instruction: Answer all questions in this section by selecting the most appropriate option."
+  marks?: string;
+  questions: ObjectiveQuestion[];
+}
+
+export interface ExamSectionB {
+  title: string; // e.g. "SECTION B: ESSAY QUESTIONS [40 MARKS]"
+  instruction: string; // e.g. "Instruction: Answer any FOUR (4) questions. Each question carries 10 marks..."
+  marks?: string;
+  questions: EssayQuestion[];
+}
+
+export interface ExamData {
+  schoolName: string;
+  schoolMotto: string;
+  schoolAddress: string;
+  contactInfo: string;
+  termSession: string;
+  subject: string;
+  classLevel: string;
+  timeAllowed: string;
+  fullMarks: string;
+  sectionA: ExamSectionA;
+  sectionB: ExamSectionB;
+  footerNotice: string;
+  optionsStyle: "(a), (b), (c), (d)" | "(A), (B), (C), (D)" | "a), b), c), d)" | "A., B., C., D.";
+  layoutColumns: 1 | 2;
+  fontSize: "10pt" | "11pt" | "12pt" | "13pt";
+  lineSpacing: "1.0" | "1.15" | "1.25" | "1.5";
+  fontFamily: "Times New Roman" | "Georgia" | "Arial" | "Calibri";
+  optionsLinear: boolean;
+}
+
+export interface CorrectionItem {
+  type: "abbreviation" | "option_fix" | "typo" | "formatting" | "punctuation";
+  original: string;
+  corrected: string;
+  description: string;
+  location?: string;
+}
+
+export interface AuditReport {
+  timestamp: string;
+  totalQuestions: number;
+  sectionACount: number;
+  sectionBCount: number;
+  totalCalculatedMarks: number;
+  corrections: CorrectionItem[];
+  examinerComments?: string;
+  qualityScore?: number;
+}
+
+export interface MarkingGuideData {
+  subject: string;
+  classLevel: string;
+  objectiveAnswers: {
+    questionNumber: number;
+    answer: string;
+    explanation?: string;
+  }[];
+  essayMarkingScheme: {
+    questionNumber: string;
+    expectedPoints: string[];
+    allocatedMarks?: string;
+  }[];
+}

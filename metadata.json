@@ -1,0 +1,6 @@
+{
+  "name": "The Moderator",
+  "description": "Examination question paper corrector, examiner, and formatter with automated abbreviation expansion, linear options formatting, Times New Roman typography, and PDF export for At-Tarbiyya Community College.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
