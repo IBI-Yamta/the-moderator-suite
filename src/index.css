@@ -35,21 +35,78 @@
 
 /* Exam Paper Document Container - High-fidelity A4 document with Professional shadow */
 .exam-page {
-  background: #ffffff;
-  color: #000000;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
-  min-height: 297mm;
-  width: 210mm;
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
   margin: 0 auto;
   box-sizing: border-box;
 }
 
-/* Print Optimization */
+.exam-page.orientation-portrait {
+  min-height: 297mm;
+  width: 210mm;
+  max-width: 210mm;
+}
+
+.exam-page.orientation-landscape {
+  min-height: 210mm;
+  width: 297mm;
+  max-width: 297mm;
+}
+
+/* Enforce strict 2-column grid across preview, mobile, and print */
+.exam-2col-grid {
+  display: grid !important;
+  grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem) !important;
+  column-gap: 1.5rem !important;
+  row-gap: 0.75rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.exam-2col-grid > *:not(.exam-col-divider) {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow-wrap: break-word !important;
+  word-break: break-word !important;
+}
+
+.exam-col-divider {
+  width: 1px !important;
+  min-width: 1px !important;
+  max-width: 1px !important;
+  background-color: #000000 !important;
+}
+
+/* Print Optimization - Perfect A4 calibration with zero edge trimming */
+@page {
+  margin: 6mm 6mm 6mm 6mm;
+}
+
+@page portrait-sheet {
+  size: A4 portrait;
+  margin: 6mm 6mm 6mm 6mm;
+}
+
+@page landscape-sheet {
+  size: A4 landscape;
+  margin: 6mm 6mm 6mm 6mm;
+}
+
 @media print {
-  body {
-    background: transparent !important;
+  html, body, #root {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    background: #ffffff !important;
     padding: 0 !important;
     margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   .no-print {
@@ -64,14 +121,50 @@
     box-shadow: none !important;
     margin: 0 !important;
     width: 100% !important;
+    min-width: 100% !important;
     max-width: 100% !important;
-    padding: 10mm 12mm !important;
+    padding: 0 !important;
     border: none !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
   }
 
-  @page {
-    size: A4 portrait;
-    margin: 10mm 12mm;
+  .exam-page.orientation-portrait {
+    page: portrait-sheet;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .exam-page.orientation-landscape {
+    page: landscape-sheet;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .exam-2col-grid {
+    display: grid !important;
+    grid-template-columns: calc(50% - 0.75rem) calc(50% - 0.75rem) !important;
+    column-gap: 1.5rem !important;
+    row-gap: 0.75rem !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .exam-2col-grid > *:not(.exam-col-divider) {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .exam-col-divider {
+    display: block !important;
+    width: 1px !important;
+    min-width: 1px !important;
+    max-width: 1px !important;
+    background-color: #000000 !important;
   }
 
   .page-break-after {

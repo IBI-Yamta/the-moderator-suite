@@ -2,7 +2,7 @@ import React from "react";
 
 interface SchoolLogoProps {
   className?: string;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "watermark" | "custom";
 }
 
 export const SchoolLogo: React.FC<SchoolLogoProps> = ({
@@ -14,6 +14,8 @@ export const SchoolLogo: React.FC<SchoolLogoProps> = ({
     md: "w-20 h-24",
     lg: "w-28 h-32",
     xl: "w-36 h-42",
+    watermark: "w-72 h-84 sm:w-96 sm:h-112 md:w-[420px] md:h-[500px]",
+    custom: "w-full h-full",
   };
 
   const dim = sizeMap[size] || sizeMap.md;

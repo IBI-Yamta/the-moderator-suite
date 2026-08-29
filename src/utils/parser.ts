@@ -9,11 +9,13 @@ export const DEFAULT_SCHOOL_INFO = {
 };
 
 /**
- * Common spelling corrections dictionary for academic examinations
+ * Extensive academic spelling and typographical corrections dictionary
  */
 export const SPELLING_CORRECTIONS_MAP: Record<string, string> = {
+  // Government, Civic, History & Social Sciences
   goverment: "government",
   governmnt: "government",
+  govnment: "government",
   electorial: "electoral",
   electrate: "electorate",
   democrasy: "democracy",
@@ -22,8 +24,10 @@ export const SPELLING_CORRECTIONS_MAP: Record<string, string> = {
   judicairy: "judiciary",
   legislatve: "legislative",
   legisalture: "legislature",
+  legilature: "legislature",
   contitution: "constitution",
   constitutuion: "constitution",
+  constituion: "constitution",
   independance: "independence",
   feudalismm: "feudalism",
   monarky: "monarchy",
@@ -31,36 +35,7 @@ export const SPELLING_CORRECTIONS_MAP: Record<string, string> = {
   parlimentary: "parliamentary",
   presidentail: "presidential",
   priviledge: "privilege",
-  enviroment: "environment",
-  seperate: "separate",
-  succesful: "successful",
-  recieved: "received",
-  calulate: "calculate",
-  calclate: "calculate",
-  defination: "definition",
-  oppurtunity: "opportunity",
-  occurance: "occurrence",
-  excersise: "exercise",
-  differnt: "different",
-  accross: "across",
-  untill: "until",
-  grammer: "grammar",
-  beleive: "believe",
-  aquire: "acquire",
-  fourty: "forty",
-  maintainance: "maintenance",
-  pronounciation: "pronunciation",
-  truely: "truly",
-  questionaire: "questionnaire",
-  councel: "council",
-  concil: "council",
-  commitee: "committee",
-  comittee: "committee",
-  guarentee: "guarantee",
-  embarass: "embarrass",
-  harrass: "harass",
-  occured: "occurred",
-  tendancy: "tendency",
+  priviliges: "privileges",
   sovereignity: "sovereignty",
   citizenshio: "citizenship",
   citizenshp: "citizenship",
@@ -87,16 +62,169 @@ export const SPELLING_CORRECTIONS_MAP: Record<string, string> = {
   inauguration: "inauguration",
   inaugaration: "inauguration",
   judicature: "judiciary",
+  cololialism: "colonialism",
+  nationalisim: "nationalism",
+  fasism: "fascism",
+  totalitarianisim: "totalitarianism",
+  gerrymandaring: "gerrymandering",
+  constituncy: "constituency",
+  plutocrasy: "plutocracy",
+  aristocrasy: "aristocracy",
+  decentralisaton: "decentralization",
+  centralisaton: "centralization",
+
+  // Sciences (Biology, Chemistry, Physics, Agri)
+  photosynthisis: "photosynthesis",
+  photosyntheis: "photosynthesis",
+  mitocondria: "mitochondria",
+  mitochondrion: "mitochondrion",
+  chloroplasts: "chloroplasts",
+  chloroplast: "chloroplast",
+  chlorophyl: "chlorophyll",
+  chlorophylll: "chlorophyll",
+  ribosom: "ribosome",
+  cytoplasim: "cytoplasm",
+  chromosom: "chromosome",
+  respiraton: "respiration",
+  osmoregulaton: "osmoregulation",
+  homestasis: "homeostasis",
+  enzym: "enzyme",
+  digestionn: "digestion",
+  circulaton: "circulation",
+  haemoglobin: "haemoglobin",
+  capilary: "capillary",
+  cartilag: "cartilage",
+  skeletan: "skeleton",
+  ecosystm: "ecosystem",
+  transpiraton: "transpiration",
+  fermentaton: "fermentation",
+  microoganism: "microorganism",
+  anaerobik: "anaerobic",
+  aerobik: "aerobic",
+  photosynthate: "photosynthate",
+  autotrophik: "autotrophic",
+  heterotrophik: "heterotrophic",
+  pollinaton: "pollination",
+  fertilizaton: "fertilization",
+  germinatn: "germination",
+  excreton: "excretion",
+  reproductn: "reproduction",
+  vertebrat: "vertebrate",
+  invertebrat: "invertebrate",
+  amphibian: "amphibian",
+  reptil: "reptile",
+  mammel: "mammal",
+  evaporaton: "evaporation",
+  condensaton: "condensation",
+  precipitaton: "precipitation",
+  neutralisaton: "neutralization",
+  acceleraton: "acceleration",
+  gravitaton: "gravitation",
+  frictn: "friction",
+  densiti: "density",
+  presure: "pressure",
+  temprature: "temperature",
+  thermomtr: "thermometer",
+  barometre: "barometer",
+  hydrometr: "hydrometer",
+  microsop: "microscope",
+  telesop: "telescope",
+
+  // English, General & Typography
+  enviroment: "environment",
+  seperate: "separate",
+  succesful: "successful",
+  recieved: "received",
+  recieve: "receive",
+  calulate: "calculate",
+  calclate: "calculate",
+  defination: "definition",
+  oppurtunity: "opportunity",
+  occurance: "occurrence",
+  excersise: "exercise",
+  differnt: "different",
+  accross: "across",
+  untill: "until",
+  grammer: "grammar",
+  beleive: "believe",
+  aquire: "acquire",
+  fourty: "forty",
+  maintainance: "maintenance",
+  pronounciation: "pronunciation",
+  truely: "truly",
+  questionaire: "questionnaire",
+  councel: "council",
+  concil: "council",
+  commitee: "committee",
+  comittee: "committee",
+  guarentee: "guarantee",
+  embarass: "embarrass",
+  harrass: "harass",
+  occured: "occurred",
+  tendancy: "tendency",
+  begining: "beginning",
+  accomodate: "accommodate",
+  acheive: "achieve",
+  agressive: "aggressive",
+  amatuer: "amateur",
+  apparant: "apparent",
+  appearence: "appearance",
+  arguement: "argument",
+  calender: "calendar",
+  catagory: "category",
+  collumn: "column",
+  deceive: "deceive",
+  disciplin: "discipline",
+  equiptment: "equipment",
+  forein: "foreign",
+  fulfil: "fulfill",
+  hygeine: "hygiene",
+  immediatly: "immediately",
+  judgement: "judgment",
+  knowlege: "knowledge",
+  liesure: "leisure",
+  libary: "library",
+  lisence: "license",
+  neccessary: "necessary",
+  necessery: "necessary",
+  necesary: "necessary",
+  nieghbour: "neighbour",
+  noticable: "noticeable",
+  occassion: "occasion",
+  paralell: "parallel",
+  patiance: "patience",
+  persistant: "persistent",
+  posession: "possession",
+  rythm: "rhythm",
+  schedul: "schedule",
+  secratary: "secretary",
+  thier: "their",
+  thorough: "thorough",
+  twelth: "twelfth",
+  vaccum: "vacuum",
+  vehical: "vehicle",
+  wether: "weather",
+  whitch: "which",
+  answr: "answer",
+  queston: "question",
+  subjcet: "subject",
+  exampel: "example",
+  statment: "statement",
+  chose: "choose",
+  folowing: "following",
+  optin: "option",
+  corect: "correct",
 };
 
 /**
- * Proofreads a sentence, fixing spelling, grammar capitalization, and punctuation
+ * Proofreads a sentence, fixing spelling, grammar, capitalization, and punctuation
  */
 export function proofreadSentence(rawText: string, corrections?: CorrectionItem[], contextName?: string): string {
   if (!rawText) return "";
   let text = rawText.trim();
 
-  // 1. Fix double spaces and clean whitespace
+  // 1. Fix spacing before punctuation (e.g. "word ," -> "word,")
+  text = text.replace(/\s+([.,;:?!])/g, "$1");
   text = text.replace(/[\t ]+/g, " ");
 
   // 2. Fix spelling errors based on word dictionary
@@ -122,7 +250,56 @@ export function proofreadSentence(rawText: string, corrections?: CorrectionItem[
     }
   }
 
-  // 3. Fix double punctuation like .., ??, ,,
+  // 3. Fix common grammar defects
+  // Duplicate words like "the the", "in in", "of of", "is is"
+  text = text.replace(/\b(the|in|of|is|are|to|and|that)\s+\1\b/gi, (match, word) => {
+    if (corrections) {
+      corrections.push({
+        type: "grammar",
+        original: match,
+        corrected: word,
+        description: `Removed duplicate word "${match}"${contextName ? ` in ${contextName}` : ""}`,
+      });
+    }
+    return word;
+  });
+
+  // "an" vs "a" before consonants or vowels
+  text = text.replace(/\ba\s+([aeiou][a-z]{2,})\b/gi, (match, word) => {
+    // Avoid exceptions like "a university", "a union", "a unique"
+    if (/^(university|union|unique|uniform|unit|universal|useless|eunuch|euro)/i.test(word)) {
+      return match;
+    }
+    const repl = `an ${word}`;
+    if (corrections) {
+      corrections.push({
+        type: "grammar",
+        original: match,
+        corrected: repl,
+        description: `Corrected indefinite article: "${match}" -> "${repl}"${contextName ? ` in ${contextName}` : ""}`,
+      });
+    }
+    return repl;
+  });
+
+  // "an university" -> "a university"
+  text = text.replace(/\ban\s+(university|union|unique|uniform|unit|universal|useless|euro)/gi, (match, word) => {
+    const repl = `a ${word}`;
+    if (corrections) {
+      corrections.push({
+        type: "grammar",
+        original: match,
+        corrected: repl,
+        description: `Corrected article: "${match}" -> "${repl}"${contextName ? ` in ${contextName}` : ""}`,
+      });
+    }
+    return repl;
+  });
+
+  // "can be able to" -> "can"
+  text = text.replace(/\bcan\s+be\s+able\s+to\b/gi, "can");
+
+  // 4. Fix double punctuation like .., ??, ,,
   const prevPunct = text;
   text = text.replace(/\.{2,}/g, "...");
   text = text.replace(/\?{2,}/g, "?");
@@ -137,7 +314,7 @@ export function proofreadSentence(rawText: string, corrections?: CorrectionItem[
     });
   }
 
-  // 4. Ensure first character is uppercase
+  // 5. Ensure first character is uppercase
   if (text.length > 0 && text[0] !== text[0].toUpperCase()) {
     const originalText = text;
     text = text.charAt(0).toUpperCase() + text.slice(1);
@@ -151,11 +328,10 @@ export function proofreadSentence(rawText: string, corrections?: CorrectionItem[
     }
   }
 
-  // 5. Ensure interrogative questions end with a question mark
+  // 6. Ensure interrogative questions end with a question mark
   const interrogativeWords = /^(What|Which|Why|When|Where|Who|Whom|Whose|How|Is|Are|Was|Were|Can|Could|Should|Would|Do|Does|Did|Has|Have|Had|Will|Shall)\b/i;
   if (interrogativeWords.test(text) && !text.endsWith("?") && !text.includes("______") && !text.endsWith(":")) {
     const originalText = text;
-    // Replace trailing period with question mark, or append question mark
     if (text.endsWith(".")) {
       text = text.slice(0, -1) + "?";
     } else {
@@ -278,10 +454,63 @@ export function proofreadExamInPlace(currentExam: ExamData): { exam: ExamData; a
 }
 
 /**
+ * Pre-processes and normalizes exam text before parsing.
+ * Inserts explicit line breaks before section headers, instructions, and inline question boundaries.
+ * This guarantees that Word documents, PDF extractions, and single-line pasted text are cleanly split into individual questions.
+ */
+export function preformatExamText(rawText: string): string {
+  if (!rawText) return "";
+  let text = rawText.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  // 1. Separate Section Headers with newlines
+  text = text.replace(
+    /\b(SECTION\s+[A-Z][^\n]*|PART\s+[A-Z][^\n]*|ESSAY\s+QUESTIONS[^\n]*|THEORY\s+QUESTIONS[^\n]*|STRUCTURED\s+QUESTIONS[^\n]*|OBJECTIVE\s+QUESTIONS[^\n]*)/gi,
+    "\n\n$1\n\n"
+  );
+
+  // 2. Separate Instructions with newlines
+  text = text.replace(/\b(Instruction(?:s)?\s*:\s*[^\n]+)/gi, "\n\n$1\n\n");
+
+  // 3. Ensure spacing before options like is(a), is(A), law[a], law[A], 1960.A., Nigeria?(a)
+  text = text.replace(/([a-zA-Z0-9?.,;:!])\s*([\(\[]\s*[a-dA-D]\s*[\)\]])/g, "$1 $2");
+  text = text.replace(/([a-zA-Z0-9?.,;:!])\s+([a-dA-D][\)\]\.\:\-–—])(?=\s)/g, "$1 $2");
+
+  // 4. Inject newlines before question numbers that are inline, glued, or preceded by option text/punctuation:
+  // Examples:
+  // " (d) Lagos 2. What is..." -> " (d) Lagos\n2. What is..."
+  // " D. Abuja 3. Which of..." -> " D. Abuja\n3. Which of..."
+  // " [10 marks] 2. State the..." -> " [10 marks]\n2. State the..."
+  // " ...in 1960. 2. Who is..." -> " ...in 1960.\n2. Who is..."
+  // " Question 2: ..." -> "\nQuestion 2: ..."
+  // " Q2. ..." -> "\nQ2. ..."
+
+  // Match "Question \d+" or "Q\d+" inline
+  text = text.replace(/(?<=[^\n])\s*\b((?:Question|Q\.?)\s*\d+[a-z]?[.)\-–—:]?\s+)/gi, "\n$1");
+
+  // Match "\d+. [A-Za-z]" or "\d+) [A-Za-z]" or "\d+- [A-Za-z]" or "\d+\([a-z]\)"
+  // when preceded by punctuation, option delimiters, or space (avoid matching dates like 1960. or phone numbers)
+  text = text.replace(
+    /(?<=[\s.?!;:)\]]|^)(?<!\b(?:[a-zA-Z]\d|\d{4}))\s*(\b\d{1,3}[a-z]?[.)\-–—]\s+(?=[A-Za-z0-9("']|\([a-z]\)))/g,
+    "\n$1"
+  );
+
+  // Match "(\d+) [A-Z]" inline
+  text = text.replace(/(?<=[^\n])\s*(\(\d{1,3}\)\s+(?=[A-Za-z0-9("']))/g, "\n$1");
+
+  // 5. Clean excessive spaces (while keeping newlines intact)
+  text = text
+    .split("\n")
+    .map((l) => l.replace(/[ \t]+/g, " ").trim())
+    .join("\n");
+
+  return text;
+}
+
+/**
  * Standardize text abbreviations for subjects, classes, and common tokens
  */
 export function normalizeAbbreviations(text: string, corrections: CorrectionItem[]): string {
-  let modified = text;
+  let modified = preformatExamText(text);
 
   // Fix merged question/option patterns like is(A), the(A), called(A), it(A), Nigeria?(A)
   const mergedOptionRegex = /([a-zA-Z0-9?.,])\s*\(([a-dA-D])\)/g;
@@ -299,6 +528,39 @@ export function normalizeAbbreviations(text: string, corrections: CorrectionItem
   });
 
   return modified;
+}
+
+/**
+ * Splits exam text into individual question blocks.
+ * Employs primary line-based splitting and secondary inline segmenting to guarantee that multi-question documents never collapse into 1 question.
+ */
+export function splitIntoQuestionBlocks(rawSectionText: string): string[] {
+  if (!rawSectionText || !rawSectionText.trim()) return [];
+
+  const preformatted = preformatExamText(rawSectionText);
+
+  // 1. Primary Split: Match question starts on fresh lines (e.g. "\n1.", "\n1a.", "\n1)", "\nQuestion 1", "\nQ1.")
+  const primaryRegex = /(?=\n\s*(?:(?:question\s+|q\.?\s*)?\d+[a-z]?|\(\d+\)|\d+\([a-z]\))[.)\-–—:]?\s*)/i;
+  let blocks = preformatted
+    .split(primaryRegex)
+    .map((b) => b.trim())
+    .filter((b) => b.length > 0);
+
+  // 2. Secondary Inspection: Check if any block still contains multiple questions glued together
+  const refinedBlocks: string[] = [];
+  const inlineQuestionDetector = /(?<=[.?!;:)\]\s])(?<!\b\d{4})\s*(?=(?:(?:question\s+|q\.?\s*)\d+|\b\d{1,3}[.)\-–—]\s+[A-Za-z0-9("']))/gi;
+
+  for (const block of blocks) {
+    // If a block has multiple question markers (e.g. contains " 2. " or " 3. " inside), split it
+    const subParts = block.split(inlineQuestionDetector).map((s) => s.trim()).filter((s) => s.length > 0);
+    if (subParts.length > 1) {
+      refinedBlocks.push(...subParts);
+    } else {
+      refinedBlocks.push(block);
+    }
+  }
+
+  return refinedBlocks;
 }
 
 /**
@@ -439,28 +701,93 @@ function cleanQuestionStem(stem: string): string {
 }
 
 /**
+ * Detects if a text block represents an essay / theory question rather than an objective multiple-choice question.
+ */
+export function isEssayBlock(block: string): boolean {
+  const text = block.trim();
+  if (!text) return false;
+
+  // 1. Explicit marks indicator e.g. [5 marks], (10 marks), [4mks], (15 Marks)
+  if (/[\[(]\s*\d+\s*(?:marks?|mks)\s*[\])]/i.test(text) || /\b\d+\s*marks\b/i.test(text)) {
+    return true;
+  }
+
+  // 2. Starts with explicit essay command verbs:
+  // e.g. "1. (a) Define ...", "1a. Explain ...", "Question 1: State four ..."
+  const essayVerbPattern = /^(?:(?:\d+[a-z]?|\d+\([a-z]\)|\([a-z]\)|question\s+\d+)[.)]?\s*)+(?:define|explain|state|list|mention|describe|distinguish|differentiate|discuss|calculate|outline|draw|highlight|account\s+for|compare|name|give|write\s+short\s+note|identify|examine|illustrate|evaluate|briefly\s+explain|with\s+the\s+aid\s+of|prove|show\s+that)\b/i;
+  if (essayVerbPattern.test(text)) {
+    return true;
+  }
+
+  // 3. Has sub-questions (a) and (b) where the subparts are long or contain essay verbs, and NO options (c) or (d)
+  const textLower = text.toLowerCase();
+  const posA = textLower.search(/(?:\([a]\)|[\s]a[\).]|[\s]\([a]\))/);
+  const posB = textLower.search(/(?:\([b]\)|[\s]b[\).]|[\s]\([b]\))/);
+  const posC = textLower.search(/(?:\([c]\)|[\s]c[\).]|[\s]\([c]\))/);
+  const posD = textLower.search(/(?:\([d]\)|[\s]d[\).]|[\s]\([d]\))/);
+
+  if (posA !== -1 && posB !== -1 && posC === -1 && posD === -1) {
+    const partA = text.substring(posA, posB);
+    const partB = text.substring(posB);
+    if (
+      /\b(define|explain|state|list|mention|describe|calculate|outline|draw|discuss|what\s+is|who\s+is|how\s+does)\b/i.test(partA) ||
+      /\b(define|explain|state|list|mention|describe|calculate|outline|draw|discuss|what\s+is|who\s+is|how\s+does)\b/i.test(partB) ||
+      partA.length > 50 ||
+      partB.length > 50
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Helper to match option delimiters like (a), (A), [a], [A], A., a., A), a), A:, a:, (a.), (A.)
+ */
+function findOptionPositions(cleanBlock: string) {
+  const getMarkerRegex = (l: string) => {
+    const u = l.toUpperCase();
+    return new RegExp(
+      `(?<=[\\s\\n]|^)(?:\\([${l}${u}][.)]?\\)|\\[[${l}${u}][.)]?\\]|[${l}${u}][)\\]\\.:\\-–—](?=\\s))|(?<=[^\\s\\n])\\([${l}${u}][.)]?\\)`
+    );
+  };
+
+  const posA = cleanBlock.search(getMarkerRegex("a"));
+  const posB = cleanBlock.search(getMarkerRegex("b"));
+  const posC = cleanBlock.search(getMarkerRegex("c"));
+  const posD = cleanBlock.search(getMarkerRegex("d"));
+
+  return { posA, posB, posC, posD };
+}
+
+/**
  * Parse an objective question string into question text and options (a, b, c, d)
  */
 export function parseObjectiveQuestion(rawBlock: string, questionNum: number, corrections: CorrectionItem[]): ObjectiveQuestion | null {
-  // Remove leading question number e.g. "1.", "1)", "(1)"
-  let cleanBlock = rawBlock.replace(new RegExp(`^\\s*\\(?${questionNum}[.)]\\s*`, "i"), "").trim();
-  cleanBlock = cleanBlock.replace(/^\s*\d+[.)]\s*/, "").trim();
+  // If the block is actually an essay question, return null so it doesn't pollute Section A
+  if (isEssayBlock(rawBlock)) {
+    return null;
+  }
 
-  // Search for the position of option markers (A), (a), A), a), A., a.
-  const textLower = cleanBlock.toLowerCase();
-  
-  // Search for the position of (A) / A) / (a)
-  const posA = textLower.search(/(?:\([a]\)|[\s]a[\).]|[\s]\([a]\)|(?<=\S)\(a\))/);
-  const posB = textLower.search(/(?:\([b]\)|[\s]b[\).]|[\s]\([b]\)|(?<=\S)\(b\))/);
-  const posC = textLower.search(/(?:\([c]\)|[\s]c[\).]|[\s]\([c]\)|(?<=\S)\(c\))/);
-  const posD = textLower.search(/(?:\([d]\)|[\s]d[\).]|[\s]\([d]\)|(?<=\S)\(d\))/);
+  // Extract explicit question number if present (e.g. "1.", "1a.", "Question 1:", "Q.1")
+  const numMatch = rawBlock.match(/^[\s\n]*(?:(?:question|q\.?)\s*)?(\d{1,3})[a-z]?[.)\-–—:]?\s*/i);
+  const actualNum = numMatch ? parseInt(numMatch[1], 10) : questionNum;
+
+  // Remove leading question number e.g. "1.", "1a.", "1(a).", "1)", "(1)", "Question 1:"
+  let cleanBlock = rawBlock
+    .replace(/^[\s\n]*(?:(?:question|q\.?)\s*)?(?:\d{1,3}[a-z]?|\d{1,3}\([a-z]\)|\(\d{1,3}\)|\([a-z]\))[.)\-–—:]?\s*/i, "")
+    .trim();
+
+  // Search for the position of option markers (A), (a), A), a), A., a., [A], [a], etc.
+  const { posA, posB, posC, posD } = findOptionPositions(cleanBlock);
 
   let questionText = cleanBlock;
   let options: OptionItem[] = [];
 
   if (posA !== -1 && posB !== -1 && posB > posA) {
     questionText = cleanBlock.substring(0, posA).trim();
-    
+
     // Extract A
     const optAEnd = posB;
     const optARaw = cleanBlock.substring(posA, optAEnd);
@@ -492,28 +819,30 @@ export function parseObjectiveQuestion(rawBlock: string, questionNum: number, co
       { key: "b", text: optBText },
       { key: "c", text: optCText },
       { key: "d", text: optDText },
-    ].filter(o => o.text.length > 0);
+    ].filter((o) => o.text.length > 0);
 
     // If options parsed successfully, record formatting correction
     corrections.push({
       type: "formatting",
-      original: `Q${questionNum} options`,
-      corrected: options.map(o => `(${o.key}) ${o.text}`).join(" "),
-      description: `Aligned options linearly as (a), (b), (c), (d) without duplicate markers for Question ${questionNum}`,
+      original: `Q${actualNum} options`,
+      corrected: options.map((o) => `(${o.key}) ${o.text}`).join(" "),
+      description: `Aligned options linearly as (a), (b), (c), (d) without duplicate markers for Question ${actualNum}`,
     });
   } else {
-    // Fallback regex match
-    const parts = cleanBlock.split(/(?=\([a-dA-D]\)|(?<=\s)[a-dA-D]\))/);
+    // Fallback regex match for alternative split delimiters
+    const parts = cleanBlock.split(/(?=\([a-dA-D]\)|(?<=\s)[a-dA-D][\)\].:\-–—]|\[[a-dA-D]\])/);
     if (parts.length > 1) {
       questionText = parts[0].trim();
       const keys = ["a", "b", "c", "d"];
       for (let i = 1; i < parts.length && i <= 4; i++) {
         const rawOpt = parts[i].trim();
         const cleanedOpt = cleanOptionText(rawOpt);
-        options.push({
-          key: keys[i - 1] || "a",
-          text: cleanedOpt,
-        });
+        if (cleanedOpt) {
+          options.push({
+            key: keys[i - 1] || "a",
+            text: cleanedOpt,
+          });
+        }
       }
     }
   }
@@ -526,18 +855,23 @@ export function parseObjectiveQuestion(rawBlock: string, questionNum: number, co
     }
   }
 
+  // If no options were found, this is not an objective question
+  if (options.length === 0) {
+    return null;
+  }
+
   // Clean trailing question stem punctuation or incomplete words
   questionText = cleanQuestionStem(questionText);
-  questionText = proofreadSentence(questionText, corrections, `Question ${questionNum}`);
+  questionText = proofreadSentence(questionText, corrections, `Question ${actualNum}`);
 
   options = options.map((opt) => ({
     ...opt,
-    text: proofreadSentence(opt.text, corrections, `Q${questionNum} Option (${opt.key})`),
+    text: proofreadSentence(opt.text, corrections, `Q${actualNum} Option (${opt.key})`),
   }));
 
   return {
-    id: questionNum,
-    questionNumber: questionNum,
+    id: actualNum || questionNum,
+    questionNumber: actualNum || questionNum,
     questionText,
     options,
   };
@@ -545,103 +879,220 @@ export function parseObjectiveQuestion(rawBlock: string, questionNum: number, co
 
 /**
  * Parse Section B (Essay / Theory questions)
+ * Strictly enforces sequential question numbering (1, 2, 3, 4, 5, etc.) regardless of how fragmented,
+ * missing, or non-sequential the original numbering in the source text is.
  */
 export function parseEssayQuestions(text: string, corrections: CorrectionItem[]): EssayQuestion[] {
-  const essayQuestions: EssayQuestion[] = [];
-  const lines = text.split("\n").map(l => l.trim()).filter(Boolean);
+  const cleanBody = text.trim();
+  if (!cleanBody) return [];
 
-  let currentQuestion: EssayQuestion | null = null;
+  // Group raw chunks and lines into logical Essay Question units
+  interface RawEssayUnit {
+    originalNum?: number;
+    stem: string;
+    marks?: string;
+    subQuestions: Array<{ label: string; text: string; marks?: string }>;
+  }
 
-  for (const line of lines) {
-    // Check if main question e.g. "1.", "1a.", "Question 1", "2a."
-    const mainMatch = line.match(/^(?:question\s+)?(\d+)[a-z]?[.)]\s*(.*)$/i);
-    const subMatch = line.match(/^([a-z]|\b(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)\b|\d+[a-z]?)[.)]\s*(.*)$/i);
+  const rawUnits: RawEssayUnit[] = [];
 
-    // Extract marks if present e.g. "[4 marks]", "(5 marks)", "[10 Marks]"
-    const marksMatch = line.match(/[\[(](\d+\s*marks?)[\])]/i);
-    const marks = marksMatch ? `[${marksMatch[1].toLowerCase()}]` : undefined;
-    const cleanLine = line.replace(/[\[(]\d+\s*marks?[\])]/gi, "").trim();
+  // Split into raw blocks first
+  const blocks = splitIntoQuestionBlocks(cleanBody);
 
-    if (mainMatch && !line.match(/^[i|v|x]+[.)]/i)) {
-      const qNum = mainMatch[1];
-      
-      // If question number is new or no current question
-      if (!currentQuestion || currentQuestion.questionNumber !== qNum) {
-        currentQuestion = {
-          questionNumber: qNum,
-          text: cleanLine,
-          marks,
-          subQuestions: [],
-        };
-        essayQuestions.push(currentQuestion);
-      }
+  for (const block of blocks) {
+    if (!block.trim()) continue;
 
-      // Check if it has a sub-label e.g. "1a.", "1b."
-      const labelMatch = line.match(/^(\d+[a-z]|[a-z]|\b(?:i|ii|iii|iv|v)\b)[.)]/i);
-      if (labelMatch && currentQuestion) {
-        const label = labelMatch[1].toLowerCase();
-        const subText = cleanLine.replace(/^(\d+[a-z]|[a-z]|\b(?:i|ii|iii|iv|v)\b)[.)]\s*/i, "").trim();
-        currentQuestion.subQuestions.push({
-          label,
-          text: subText,
-          marks,
-        });
-      }
-    } else if (subMatch && currentQuestion) {
-      const label = subMatch[1].toLowerCase();
-      const subText = cleanLine.replace(/^([a-z]|\b(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)\b|\d+[a-z]?)[.)]\s*/i, "").trim();
-      currentQuestion.subQuestions.push({
-        label,
-        text: subText,
-        marks,
+    const lines = block
+      .trim()
+      .split("\n")
+      .map((l) => l.trim())
+      .filter(Boolean);
+    if (lines.length === 0) continue;
+
+    const firstLine = lines[0];
+
+    // Detect if this block starts with a question number e.g. "1.", "1a.", "Question 3:", "Q4.", "5(a)", "12."
+    const qNumMatch = firstLine.match(
+      /^[\s\n]*(?:(?:question|q\.?|no\.?)\s*)?(\d{1,3})([a-z])?[.)\-–—:]?\s*/i
+    );
+    const originalNum = qNumMatch ? parseInt(qNumMatch[1], 10) : undefined;
+    const initialSubLetter = qNumMatch && qNumMatch[2] ? qNumMatch[2].toLowerCase() : undefined;
+
+    // Check if the previous unit has the SAME originalNum (e.g. 1b follows 1a, or 2b follows 2a)
+    const isContinuationOfPrev =
+      originalNum !== undefined &&
+      rawUnits.length > 0 &&
+      rawUnits[rawUnits.length - 1].originalNum === originalNum &&
+      (initialSubLetter !== undefined || lines.some((l) => /^(?:(?:\d+[a-z])|[\(\[]?[a-z][\)\]\.])\s*/i.test(l)));
+
+    let targetUnit: RawEssayUnit;
+
+    if (isContinuationOfPrev) {
+      targetUnit = rawUnits[rawUnits.length - 1];
+    } else {
+      targetUnit = {
+        originalNum,
+        stem: "",
+        subQuestions: [],
+      };
+      rawUnits.push(targetUnit);
+    }
+
+    // Extract any main marks on the first line e.g. [10 marks]
+    const marksMatch = block.match(/[\[(](\d+\s*marks?)[\])]/i);
+    if (marksMatch && !targetUnit.marks) {
+      targetUnit.marks = `[${marksMatch[1].toLowerCase()}]`;
+    }
+
+    // Extract clean stem if not continuation
+    let blockStem = firstLine
+      .replace(/^[\s\n]*(?:(?:question|q\.?|no\.?)\s*)?(?:\d{1,3}[a-z]?|\d{1,3}\([a-z]\)|\(\d{1,3}\))[.)\-–—:]?\s*/i, "")
+      .replace(/[\[(]\d+\s*marks?[\])]/gi, "")
+      .trim();
+
+    // Check if the first line itself is a subquestion (e.g. "1a. Define constitution [5 marks]")
+    if (initialSubLetter) {
+      const lineMarks = firstLine.match(/[\[(](\d+\s*marks?)[\])]/i);
+      const subMarks = lineMarks ? `[${lineMarks[1].toLowerCase()}]` : targetUnit.marks;
+      targetUnit.subQuestions.push({
+        label: initialSubLetter,
+        text: blockStem,
+        marks: subMarks,
       });
-    } else if (currentQuestion) {
-      // Append text to last subquestion or main question
-      if (currentQuestion.subQuestions.length > 0) {
-        const last = currentQuestion.subQuestions[currentQuestion.subQuestions.length - 1];
-        last.text += " " + cleanLine;
+      blockStem = ""; // First line was consumed as sub-part
+    } else if (!targetUnit.stem && blockStem) {
+      targetUnit.stem = blockStem;
+    }
+
+    // Process subsequent lines in this block for subquestions (e.g. "(a) ...", "(b) ...", "1b. ...")
+    for (let i = initialSubLetter ? 1 : 1; i < lines.length; i++) {
+      const line = lines[i];
+      const subMarksMatch = line.match(/[\[(](\d+\s*marks?)[\])]/i);
+      const subMarks = subMarksMatch ? `[${subMarksMatch[1].toLowerCase()}]` : undefined;
+      const cleanLine = line.replace(/[\[(]\d+\s*marks?[\])]/gi, "").trim();
+
+      const subLabelMatch = cleanLine.match(
+        /^(?:(?:\d+([a-z]))|[\(\[]?([a-z]|\b(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)\b)[\)\]\.])\s*(.*)$/i
+      );
+
+      if (subLabelMatch) {
+        const label = (subLabelMatch[1] || subLabelMatch[2]).toLowerCase();
+        const content = subLabelMatch[3].trim();
+        targetUnit.subQuestions.push({
+          label,
+          text: content,
+          marks: subMarks,
+        });
+      } else if (targetUnit.subQuestions.length > 0) {
+        // Continuation of previous subquestion text
+        targetUnit.subQuestions[targetUnit.subQuestions.length - 1].text += " " + cleanLine;
+      } else if (targetUnit.stem) {
+        targetUnit.stem += " " + cleanLine;
       } else {
-        currentQuestion.text += " " + cleanLine;
+        targetUnit.stem = cleanLine;
+      }
+    }
+
+    // Check for inline (a) ... (b) ... if no sub-questions were found
+    if (targetUnit.subQuestions.length === 0 && targetUnit.stem) {
+      const inlineAMatch = targetUnit.stem.search(/(?:\([a]\)|[\s]a[\).]|[\s]\([a]\))/i);
+      const inlineBMatch = targetUnit.stem.search(/(?:\([b]\)|[\s]b[\).]|[\s]\([b]\))/i);
+      const inlineCMatch = targetUnit.stem.search(/(?:\([c]\)|[\s]c[\).]|[\s]\([c]\))/i);
+
+      if (inlineAMatch !== -1 && inlineBMatch !== -1) {
+        const stem = targetUnit.stem.substring(0, inlineAMatch).trim();
+        const aPart = targetUnit.stem
+          .substring(inlineAMatch, inlineBMatch)
+          .replace(/^[\(\[]?[a-z][\)\]\.]\s*/i, "")
+          .trim();
+        const bPart =
+          inlineCMatch !== -1
+            ? targetUnit.stem
+                .substring(inlineBMatch, inlineCMatch)
+                .replace(/^[\(\[]?[a-z][\)\]\.]\s*/i, "")
+                .trim()
+            : targetUnit.stem
+                .substring(inlineBMatch)
+                .replace(/^[\(\[]?[a-z][\)\]\.]\s*/i, "")
+                .trim();
+
+        targetUnit.stem = stem;
+        targetUnit.subQuestions.push({ label: "a", text: aPart, marks: targetUnit.marks });
+        targetUnit.subQuestions.push({ label: "b", text: bPart, marks: targetUnit.marks });
+
+        if (inlineCMatch !== -1) {
+          const cPart = targetUnit.stem
+            .substring(inlineCMatch)
+            .replace(/^[\(\[]?[a-z][\)\]\.]\s*/i, "")
+            .trim();
+          targetUnit.subQuestions.push({ label: "c", text: cPart, marks: targetUnit.marks });
+        }
       }
     }
   }
 
-  // If no structured questions matched, fallback split by numbers
-  if (essayQuestions.length === 0 && text.trim().length > 0) {
-    const rawItems = text.split(/(?=\n\d+[a-z]?[.)]|\n\b(?:Question\s+\d+)\b)/i);
-    rawItems.forEach((chunk, index) => {
-      if (chunk.trim()) {
-        const lines = chunk.trim().split("\n");
-        const header = lines[0];
-        const marksMatch = chunk.match(/[\[(](\d+\s*marks?)[\])]/i);
-        essayQuestions.push({
-          questionNumber: `${index + 1}`,
-          text: header,
-          marks: marksMatch ? `[${marksMatch[1]}]` : undefined,
-          subQuestions: lines.slice(1).map((sub, sIdx) => ({
-            label: `${index + 1}${String.fromCharCode(97 + sIdx)}`,
-            text: sub.trim(),
-          })),
-        });
+  // Now, enforce strictly sequential 1, 2, 3, 4, 5... question numbering on all units
+  const finalEssayQuestions: EssayQuestion[] = [];
+
+  for (let idx = 0; idx < rawUnits.length; idx++) {
+    const unit = rawUnits[idx];
+    const sequentialNum = `${idx + 1}`;
+
+    // Clean up any remaining leading markers from stem text
+    let cleanStem = unit.stem
+      .replace(/^[\s\n]*(?:(?:question|q\.?|no\.?)\s*)?(?:\d{1,3}[a-z]?|\d{1,3}\([a-z]\)|\(\d{1,3}\))[.)\-–—:]?\s*/i, "")
+      .replace(/^[a-z][\)\]\.]\s*/i, "")
+      .trim();
+
+    // Clean subquestions
+    const cleanedSubQuestions = unit.subQuestions.map((sub, subIdx) => {
+      let subText = sub.text
+        .replace(/^[\s\n]*(?:(?:\d+[a-z])|[\(\[]?[a-z][\)\]\.])\s*/i, "")
+        .replace(/^[\(\[]?(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)[\)\]\.]\s*/i, "")
+        .trim();
+
+      // Ensure proper label sequence if missing or duplicate
+      let label = sub.label;
+      if (!label || label.length > 3) {
+        const letters = ["a", "b", "c", "d", "e", "f"];
+        label = letters[subIdx] || "a";
       }
+
+      return {
+        label,
+        text: proofreadSentence(subText, corrections, `Essay Q${sequentialNum}(${label})`),
+        marks: sub.marks,
+      };
+    });
+
+    // If original numbering was fragmented or skipped, record audit correction
+    if (unit.originalNum !== undefined && unit.originalNum !== idx + 1) {
+      corrections.push({
+        type: "formatting",
+        original: `Theory Question ${unit.originalNum}`,
+        corrected: `Question ${sequentialNum}`,
+        description: `Enforced sequential numbering for Theory section: Question ${unit.originalNum} -> Question ${sequentialNum}`,
+      });
+    }
+
+    finalEssayQuestions.push({
+      questionNumber: sequentialNum,
+      text: cleanStem ? proofreadSentence(cleanStem, corrections, `Essay Q${sequentialNum}`) : (cleanedSubQuestions.length > 0 ? "" : `Answer all parts of Question ${sequentialNum}`),
+      marks: unit.marks,
+      subQuestions: cleanedSubQuestions,
     });
   }
 
-  // Proofread all essay questions
-  return essayQuestions.map((eq) => ({
-    ...eq,
-    text: proofreadSentence(eq.text, corrections, `Essay Q${eq.questionNumber}`),
-    subQuestions: (eq.subQuestions || []).map((sub) => ({
-      ...sub,
-      text: proofreadSentence(sub.text, corrections, `Essay Q${eq.questionNumber}(${sub.label})`),
-    })),
-  }));
+  return finalEssayQuestions;
 }
 
 /**
  * Main Exam Parser & Corrector Engine
  */
-export function parseAndModerateExam(rawText: string, currentData?: Partial<ExamData>): { exam: ExamData; audit: AuditReport } {
+export function parseAndModerateExam(
+  rawText: string,
+  currentData?: Partial<ExamData>
+): { exam: ExamData; audit: AuditReport } {
   const corrections: CorrectionItem[] = [];
   const normalizedText = normalizeAbbreviations(rawText, corrections);
 
@@ -663,13 +1114,17 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
     termSession = sessionMatch[0].trim().toUpperCase();
   }
 
-  const subjectMatch = rawText.match(/SUBJECT:\s*([^\n|]+)/i) || rawText.match(/\b(eng|math|maths|gov|govt|bio|chem|phy|econs|geo|crk|crs|irk|irs|agric|comm|civic)\b/i);
+  const subjectMatch =
+    rawText.match(/SUBJECT:\s*([^\n|]+)/i) ||
+    rawText.match(/\b(eng|math|maths|gov|govt|bio|chem|phy|econs|geo|crk|crs|irk|irs|agric|comm|civic)\b/i);
   if (subjectMatch) {
     const rawSub = subjectMatch[1] || subjectMatch[0];
     subject = expandSubject(rawSub, corrections);
   }
 
-  const classMatch = rawText.match(/CLASS:\s*([^\n|]+)/i) || rawText.match(/\b(j\.?s\.?s?\.?\s*\d|s\.?s\.?s?\.?\s*\d|ss\s*\d|js\s*\d)\b/i);
+  const classMatch =
+    rawText.match(/CLASS:\s*([^\n|]+)/i) ||
+    rawText.match(/\b(j\.?s\.?s?\.?\s*\d|s\.?s\.?s?\.?\s*\d|ss\s*\d|js\s*\d)\b/i);
   if (classMatch) {
     const rawCls = classMatch[1] || classMatch[0];
     classLevel = expandClassLevel(rawCls, corrections);
@@ -681,7 +1136,9 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
   }
 
   // Split into Section A (Objectives) and Section B (Essay/Theory)
-  const sectionBSplit = normalizedText.search(/\b(?:SECTION\s+B|PART\s+B|ESSAY\s+QUESTIONS|THEORY\s+QUESTIONS)\b/i);
+  const sectionBSplit = normalizedText.search(
+    /\b(?:SECTION\s+B|PART\s+B|ESSAY\s+QUESTIONS|THEORY\s+QUESTIONS|STRUCTURED\s+QUESTIONS)\b/i
+  );
 
   let sectionAText = normalizedText;
   let sectionBText = "";
@@ -691,8 +1148,42 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
     sectionBText = normalizedText.substring(sectionBSplit);
   }
 
+  // Split question blocks cleanly across Section A using our robust segmenter
+  const rawBlocks = splitIntoQuestionBlocks(sectionAText);
+
+  const objectiveQuestions: ObjectiveQuestion[] = [];
+  const displacedEssayBlocks: string[] = [];
+
+  let currentNum = 1;
+  for (const block of rawBlocks) {
+    if (!block.trim()) continue;
+
+    // Check if this block is header noise (school title, subject, instruction)
+    if (
+      block.match(/^(?:AT-TARBIYYA|SUBJECT:|CLASS:|TIME ALLOWED:|SECTION\s+A|INSTRUCTION:)/i) &&
+      !block.match(/\([a-dA-D]\)|(?<=\s)[a-dA-D][\)\.]/)
+    ) {
+      continue;
+    }
+
+    // Check if this block is actually an essay question (e.g. 1a. Define X [5 marks])
+    if (isEssayBlock(block)) {
+      displacedEssayBlocks.push(block);
+      continue;
+    }
+
+    const q = parseObjectiveQuestion(block, currentNum, corrections);
+    if (q && q.questionText.length > 2 && q.options.length >= 2) {
+      objectiveQuestions.push(q);
+      currentNum++;
+    } else if (block.length > 20 && !block.match(/SECTION\s+A|INSTRUCTION:/i)) {
+      // If it couldn't be parsed as objective and has substantive text, route to essay
+      displacedEssayBlocks.push(block);
+    }
+  }
+
   // Parse Section A Header & Instruction
-  let secATitle = "SECTION A: OBJECTIVE QUESTIONS [30 MARKS]";
+  let secATitle = `SECTION A: OBJECTIVE QUESTIONS [${objectiveQuestions.length || 30} MARKS]`;
   let secAInstruction = "Instruction: Answer all questions in this section by selecting the most appropriate option.";
 
   const secATitleMatch = sectionAText.match(/SECTION\s+A[^\n]*/i);
@@ -700,63 +1191,26 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
     secATitle = secATitleMatch[0].trim().toUpperCase();
   }
 
-  const secAInstMatch = sectionAText.match(/Instruction:\s*([^\n]+)/i) || sectionAText.match(/Answer all questions[^\n]*/i);
+  const secAInstMatch =
+    sectionAText.match(/Instruction:\s*([^\n]+)/i) || sectionAText.match(/Answer all questions[^\n]*/i);
   if (secAInstMatch) {
     secAInstMatch[0].startsWith("Instruction:")
       ? (secAInstruction = secAInstMatch[0].trim())
       : (secAInstruction = `Instruction: ${secAInstMatch[0].trim()}`);
   }
 
-  // Parse Objective Questions (1 to 60)
-  const objectiveQuestions: ObjectiveQuestion[] = [];
-
-  // Match question chunks starting with digits e.g. "1.", "2.", "3.", "30."
-  const questionBlocks = sectionAText.split(/(?=\n\s*\d+[.)]\s*)/g);
-
-  let currentNum = 1;
-  for (const block of questionBlocks) {
-    if (block.match(/^\s*\d+[.)]/)) {
-      const q = parseObjectiveQuestion(block, currentNum, corrections);
-      if (q && q.questionText.length > 3) {
-        objectiveQuestions.push(q);
-        currentNum++;
-      }
-    }
-  }
-
-  // If no split questions found, try regex matching line by line
-  if (objectiveQuestions.length === 0) {
-    const lines = sectionAText.split("\n");
-    let currentBlock = "";
-    let qCount = 1;
-    for (const line of lines) {
-      if (line.match(/^\s*\d+[.)]/) && currentBlock.trim()) {
-        const q = parseObjectiveQuestion(currentBlock, qCount, corrections);
-        if (q) {
-          objectiveQuestions.push(q);
-          qCount++;
-        }
-        currentBlock = line;
-      } else {
-        currentBlock += "\n" + line;
-      }
-    }
-    if (currentBlock.trim()) {
-      const q = parseObjectiveQuestion(currentBlock, qCount, corrections);
-      if (q) objectiveQuestions.push(q);
-    }
-  }
-
   // Parse Section B
   let secBTitle = "SECTION B: ESSAY QUESTIONS [30 MARKS]";
-  let secBInstruction = "Instruction: Answer any THREE (3) questions. Each question carries 10 marks. Present your answers neatly and number them correctly, leaving 1–2 lines between each answer.";
+  let secBInstruction =
+    "Instruction: Answer any THREE (3) questions. Each question carries equal marks. Present your answers neatly and number them correctly.";
 
   const secBTitleMatch = sectionBText.match(/SECTION\s+B[^\n]*/i);
   if (secBTitleMatch) {
     secBTitle = secBTitleMatch[0].trim().toUpperCase();
   }
 
-  const secBInstMatch = sectionBText.match(/Instruction:\s*([^\n]+)/i) || sectionBText.match(/Answer any\s+[^\n]*/i);
+  const secBInstMatch =
+    sectionBText.match(/Instruction:\s*([^\n]+)/i) || sectionBText.match(/Answer any\s+[^\n]*/i);
   if (secBInstMatch) {
     secBInstMatch[0].startsWith("Instruction:")
       ? (secBInstruction = secBInstMatch[0].trim())
@@ -769,10 +1223,12 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
     .replace(/DO NOT WRITE ON THIS QUESTION PAPER[^\n]*/i, "")
     .trim();
 
-  const essayQuestions = parseEssayQuestions(cleanSectionBBody, corrections);
+  // Combine explicit Section B text with any displaced essay blocks
+  const fullSectionBContent = [cleanSectionBBody, ...displacedEssayBlocks].filter(Boolean).join("\n\n");
 
-  // Apply Typography Rules:
-  // Font: Times New Roman, Font Size: 12pt, Line spacing: 1.15, Options: (a), (b), (c), (d), Italicize sections & instructions
+  const essayQuestions = parseEssayQuestions(fullSectionBContent, corrections);
+
+  // Apply Typography Rules
   corrections.push({
     type: "formatting",
     original: "Default Typography",
@@ -798,7 +1254,7 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
     subject,
     classLevel,
     timeAllowed,
-    fullMarks: fullMarks || `${totalCalculatedMarks}`,
+    fullMarks: fullMarks || `${totalCalculatedMarks || 60}`,
     sectionA: {
       title: secATitle,
       instruction: secAInstruction,
@@ -810,12 +1266,13 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
       questions: essayQuestions,
     },
     footerNotice: "DO NOT WRITE ON THIS QUESTION PAPER.",
-    optionsStyle: "(a), (b), (c), (d)",
-    layoutColumns: 2,
-    fontSize: "12pt",
-    lineSpacing: "1.15",
-    fontFamily: "Times New Roman",
-    optionsLinear: true,
+    optionsStyle: currentData?.optionsStyle || "(a), (b), (c), (d)",
+    layoutColumns: currentData?.layoutColumns || 2,
+    fontSize: currentData?.fontSize || "12pt",
+    lineSpacing: currentData?.lineSpacing || "1.15",
+    fontFamily: currentData?.fontFamily || "Times New Roman",
+    optionsLinear: currentData?.optionsLinear !== undefined ? currentData.optionsLinear : true,
+    pageOrientation: currentData?.pageOrientation || "portrait",
   };
 
   const audit: AuditReport = {
@@ -831,3 +1288,4 @@ export function parseAndModerateExam(rawText: string, currentData?: Partial<Exam
 
   return { exam, audit };
 }
+

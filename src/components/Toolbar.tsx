@@ -1,5 +1,5 @@
 import React from "react";
-import { Columns2, Columns, ZoomIn, ZoomOut, RotateCcw, Type, CheckCircle2 } from "lucide-react";
+import { Columns2, Columns, ZoomIn, ZoomOut, RotateCcw, Type, CheckCircle2, RectangleVertical, RectangleHorizontal } from "lucide-react";
 import { ExamData } from "../types";
 
 interface ToolbarProps {
@@ -155,6 +155,45 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               1 Column
             </button>
           </div>
+
+          {/* Page Orientation: A4 Portrait vs A4 Landscape */}
+          <div className={`flex items-center space-x-1 ${isDark ? "bg-slate-800/90 border-slate-700" : "bg-slate-100 border-slate-200"} p-0.5 rounded-md border`}>
+            <span className={`text-xs ${isDark ? "text-slate-400" : "text-slate-500"} px-2 font-medium`}>Page:</span>
+            <button
+              id="btn-orientation-portrait"
+              onClick={() => onUpdateExamData({ pageOrientation: "portrait" })}
+              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium transition ${
+                (examData.pageOrientation || "portrait") === "portrait"
+                  ? isDark
+                    ? "bg-blue-600 text-white shadow-xs font-bold"
+                    : "bg-white text-blue-700 shadow-xs border border-slate-300/80 font-bold"
+                  : isDark
+                  ? "text-slate-300 hover:text-white"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+              title="A4 Portrait Page Orientation (210mm × 297mm)"
+            >
+              <RectangleVertical className="w-3.5 h-3.5 mr-1" />
+              A4 Portrait
+            </button>
+            <button
+              id="btn-orientation-landscape"
+              onClick={() => onUpdateExamData({ pageOrientation: "landscape" })}
+              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium transition ${
+                examData.pageOrientation === "landscape"
+                  ? isDark
+                    ? "bg-blue-600 text-white shadow-xs font-bold"
+                    : "bg-white text-blue-700 shadow-xs border border-slate-300/80 font-bold"
+                  : isDark
+                  ? "text-slate-300 hover:text-white"
+                  : "text-slate-600 hover:text-slate-900"
+              }`}
+              title="A4 Landscape Page Orientation (297mm × 210mm)"
+            >
+              <RectangleHorizontal className="w-3.5 h-3.5 mr-1" />
+              A4 Landscape
+            </button>
+          </div>
         </div>
 
         {/* Right: Auto-Correct Status, Zoom & Summary Counters */}
@@ -176,22 +215,37 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           <div className={`flex items-center space-x-1 ${isDark ? "bg-slate-800 border-slate-700" : "bg-slate-100 border-slate-200"} p-0.5 rounded-md border`}>
             <button
               id="btn-zoom-out"
-              onClick={() => onZoomChange(Math.max(0.6, zoom - 0.1))}
+              onClick={() => onZoomChange(Math.max(0.35, Number((zoom - 0.1).toFixed(2))))}
               className={`p-1 ${isDark ? "text-slate-300 hover:text-white hover:bg-slate-700" : "text-slate-600 hover:text-slate-900 hover:bg-slate-200"} rounded`}
               title="Zoom out"
             >
               <ZoomOut className="w-3.5 h-3.5" />
             </button>
-            <span className={`text-xs font-mono px-1.5 ${isDark ? "text-slate-200" : "text-slate-700"} min-w-[40px] text-center`}>
+            <span className={`text-xs font-mono px-1 ${isDark ? "text-slate-200" : "text-slate-700"} min-w-[38px] text-center`}>
               {Math.round(zoom * 100)}%
             </span>
             <button
               id="btn-zoom-in"
-              onClick={() => onZoomChange(Math.min(1.5, zoom + 0.1))}
+              onClick={() => onZoomChange(Math.min(1.5, Number((zoom + 0.1).toFixed(2))))}
               className={`p-1 ${isDark ? "text-slate-300 hover:text-white hover:bg-slate-700" : "text-slate-600 hover:text-slate-900 hover:bg-slate-200"} rounded`}
               title="Zoom in"
             >
               <ZoomIn className="w-3.5 h-3.5" />
+            </button>
+            <button
+              id="btn-zoom-fit"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  const docWidth = examData.pageOrientation === "landscape" ? 1123 : 794;
+                  const targetWidth = Math.min(window.innerWidth - 32, docWidth);
+                  const fit = Math.min(1.0, Math.max(0.35, Number((targetWidth / docWidth).toFixed(2))));
+                  onZoomChange(fit);
+                }
+              }}
+              className={`px-1.5 py-0.5 text-[10px] font-bold rounded ${isDark ? "text-blue-400 hover:bg-slate-700" : "text-blue-600 hover:bg-slate-200"}`}
+              title="Fit to Screen"
+            >
+              Fit
             </button>
             <button
               id="btn-zoom-reset"

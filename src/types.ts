@@ -58,10 +58,11 @@ export interface ExamData {
   lineSpacing: "1.0" | "1.15" | "1.25" | "1.5";
   fontFamily: "Times New Roman" | "Georgia" | "Arial" | "Calibri";
   optionsLinear: boolean;
+  pageOrientation?: "portrait" | "landscape";
 }
 
 export interface CorrectionItem {
-  type: "abbreviation" | "option_fix" | "typo" | "formatting" | "punctuation";
+  type: "abbreviation" | "option_fix" | "typo" | "grammar" | "formatting" | "punctuation";
   original: string;
   corrected: string;
   description: string;
@@ -92,4 +93,50 @@ export interface MarkingGuideData {
     expectedPoints: string[];
     allocatedMarks?: string;
   }[];
+}
+
+export type ExamHistorySource = "ai_moderate" | "ocr_scan" | "paste_import" | "manual_snapshot" | "quick_edit";
+
+export interface ExamHistoryItem {
+  id: string;
+  timestamp: string; // ISO string
+  formattedDate: string; // e.g. "Aug 28, 2026, 2:30 PM"
+  title: string;
+  subject: string;
+  classLevel: string;
+  termSession: string;
+  totalQuestions: number;
+  sectionACount: number;
+  sectionBCount: number;
+  fullMarks: string;
+  calculatedMarks: number;
+  source: ExamHistorySource;
+  qualityScore?: number;
+  correctionsCount?: number;
+  examData: ExamData;
+  auditReport?: AuditReport;
+}
+
+export interface CompletionCategory {
+  id: string;
+  title: string;
+  score: number; // 0 to 100
+  weight: number; // percentage weight
+  isComplete: boolean;
+  details: {
+    label: string;
+    status: "pass" | "warn" | "fail";
+    message: string;
+  }[];
+}
+
+export interface CompletionProgress {
+  overallPercentage: number;
+  isReady: boolean;
+  requiredFieldsComplete: boolean;
+  totalMarksMatched: boolean;
+  targetMarks: number;
+  calculatedMarks: number;
+  categories: CompletionCategory[];
+  issuesCount: number;
 }

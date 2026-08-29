@@ -112,30 +112,47 @@ app.post("/api/ai/moderate", async (req, res) => {
     const inputSubject = currentExam?.subject || "Subject from text";
     const inputClass = currentExam?.classLevel || "Class from text";
 
-    const prompt = `You are a Senior Academic Moderator and Proofreader for secondary school examination papers (WAEC/NECO and At-Tarbiyya Community College standards).
+    const prompt = `You are a Senior Academic Moderator, Chief Examiner, and Lead Proofreader for secondary school examination papers (WAEC/NECO and At-Tarbiyya Community College standards).
 
-YOUR CORE TASK:
-Proofread, correct all spelling errors, grammatical mistakes, sentence structure issues, and punctuation in the provided examination questions.
-
-CRITICAL RULES AND CONSTRAINTS:
-1. STRICT PRESERVATION: You MUST KEEP THE EXACT QUESTIONS, SUBJECT (${inputSubject}), AND TOPICS from the input content. DO NOT substitute or invent an unrelated subject or replace the user's questions with sample or Government questions.
-2. SPELLING CORRECTION: Detect and fix all spelling errors, typos, and misspelled terms in question stems and multiple-choice options.
-3. GRAMMAR & SENTENCE REFINEMENT: Fix grammatical errors, awkward syntax, subject-verb agreements, missing words, and sentence fragments so questions read smoothly and academically.
-4. PUNCTUATION & CAPITALIZATION:
-   - Capitalize the first letter of each question and sentence.
-   - Every interrogative question (starting with What, Which, Who, Why, When, Where, How, Is, Are, etc.) MUST end with a question mark (?).
+YOUR CORE MISSION:
+1. THOROUGH PROOFREADING (MANDATORY): Detect and correct EVERY SINGLE spelling error, typographical mistake, grammatical flaw, subject-verb disagreement, missing word, and punctuation issue in question stems, multiple-choice options, and essay sub-questions.
+   - Fix all spelling errors (e.g. "goverment" -> "government", "photosynthisis" -> "photosynthesis", "defination" -> "definition", "mitocondria" -> "mitochondria", "electorial" -> "electoral", "democrasy" -> "democracy", "occured" -> "occurred", "calclate" -> "calculate", "recieve" -> "receive", etc.).
+   - Fix grammatical errors and sentence fragments so questions read smoothly and academically.
+   - Punctuation: Ensure all direct interrogative questions (starting with What, Which, Who, Why, When, Where, How, Is, Are, etc.) end with a question mark (?).
    - Fill-in-the-blank spaces must be formatted with neat underscores "______".
-5. OPTION SANITIZATION:
-   - Each option text (for a, b, c, d) MUST ONLY contain the answer choice text.
-   - STRICTLY STRIP any leading option letter markers like "(a)", "(A)", "[a]", "a)", "A.", "(a)(A)" from the option text property.
-6. PRESERVE QUESTION SEQUENCE & COUNT: Maintain all questions in Section A and Section B in their original order.
-7. CORRECTIONS SUMMARY: Provide a clear list of specific spelling, grammar, and phrasing corrections made in 'moderationSummary.correctionsMade'.
-8. STANDARD MARKS & HEADER: The standard total mark for the examination is 60 (30 marks Section A + 30 marks Section B) unless explicitly instructed otherwise in the raw text. Do NOT include telephone numbers or email addresses in the school header.
+   - Capitalize the first letter of each question and proper nouns.
+
+2. QUESTION COUNT DISCIPLINE (STRICT MANDATE):
+   - SECTION A (OBJECTIVE / MULTIPLE-CHOICE QUESTIONS):
+     * The count of Section A questions MUST ALWAYS STRICTLY MATCH THE EXACT NUMBER OF OBJECTIVE QUESTIONS INPUTTED!
+     * If 30 objective questions are uploaded, output exactly 30 questions.
+     * If 40 objective questions are uploaded, output exactly 40 questions.
+     * If 50 objective questions are uploaded, output exactly 50 questions.
+     * NEVER drop, truncate, skip, or hallucinate extra objective questions. Preserve every single objective question provided in the input with sequential numbers (1, 2, 3... N).
+     * In each option item, 'text' MUST contain ONLY the answer candidate choice. STRIP any leading markers like "(a)", "[A]", "a)", "A." from 'text'.
+   
+   - SECTION B (ESSAY / THEORY / STRUCTURED QUESTIONS):
+     * Section B MUST ALWAYS MAINTAIN A CONSTANT OF 5 OR 6 QUESTIONS (Numbered sequentially 1, 2, 3, 4, 5, or 6).
+     * If the input provides 5 or 6 essay questions, retain, format, and proofread all of them.
+     * If the input contains fewer than 5 essay questions (e.g. 1, 2, or 3 questions) or only a partial essay list, you MUST generate and expand relevant, curriculum-standard theory questions for the subject (${inputSubject}) and class level (${inputClass}) to ensure Section B contains a CONSTANT OF 5 OR 6 QUESTIONS in total.
+     * Each essay question must be clearly structured with sub-questions (e.g., (a), (b), (c) or (i), (ii)) with realistic mark allocations (e.g., "[5 marks]").
+     * Instruction for Section B should read: "Instruction: Answer any THREE (3) questions (or Answer any FOUR (4) questions). Each question carries equal marks."
+
+3. ACCURATE QUESTION DIFFERENTIATION:
+   - DO NOT dump essay questions with sub-parts (e.g. "1a. Define X [5 marks]") into Section A. Keep Section A strictly for multiple-choice options (a-d).
+   - Put all essay/theory/structured questions into Section B.
+
+4. CORRECTIONS LOG:
+   - In 'moderationSummary.correctionsMade', list every single spelling correction, typo fix, and grammar improvement you made (e.g., 'Corrected spelling "goverment" -> "government" in Question 1', 'Added missing question mark to Question 4', 'Preserved all 40 inputted objective questions in Section A', 'Formatted Section B with constant standard 6 essay questions').
+
+5. PRESERVE SUBJECT & TOPIC INTENT:
+   - Preserve the exact subject (${inputSubject}) and class (${inputClass}).
+   - School Name: "AT-TARBIYYA COMMUNITY COLLEGE", Address: "HOTORO, HABIBU GWARZO STREET, KANO, NIGERIA." (Do NOT include phone numbers or emails in the header).
 
 INPUT EXAMINATION CONTENT:
 ${rawText || JSON.stringify(currentExam, null, 2)}
 
-Return the corrected and polished examination JSON matching the schema.`;
+Return the corrected and structured examination JSON matching the schema.`;
 
     const response = await generateWithFallback(ai, {
       contents: prompt,
@@ -243,7 +260,9 @@ Return the corrected and polished examination JSON matching the schema.`;
 
     // Server-side sanitize options in section A to prevent duplicate prefix artifacts
     if (result.sectionA && Array.isArray(result.sectionA.questions)) {
-      result.sectionA.questions.forEach((q: any) => {
+      result.sectionA.questions.forEach((q: any, qIdx: number) => {
+        q.id = qIdx + 1;
+        q.questionNumber = qIdx + 1;
         if (Array.isArray(q.options)) {
           q.options.forEach((opt: any) => {
             if (typeof opt.text === "string") {
@@ -258,6 +277,29 @@ Return the corrected and polished examination JSON matching the schema.`;
                      .trim();
               }
               opt.text = t;
+            }
+          });
+        }
+      });
+    }
+
+    // Server-side enforce strict sequential question numbering (1, 2, 3, 4, 5, etc.) for Section B
+    if (result.sectionB && Array.isArray(result.sectionB.questions)) {
+      result.sectionB.questions.forEach((eq: any, eqIdx: number) => {
+        eq.questionNumber = `${eqIdx + 1}`;
+        if (typeof eq.text === "string") {
+          eq.text = eq.text
+            .replace(/^[\s\n]*(?:(?:question|q\.?|no\.?)\s*)?(?:\d{1,3}[a-z]?|\d{1,3}\([a-z]\))[.)\-–—:]?\s*/i, "")
+            .replace(/^[a-z][\)\]\.]\s*/i, "")
+            .trim();
+        }
+        if (Array.isArray(eq.subQuestions)) {
+          eq.subQuestions.forEach((sub: any) => {
+            if (typeof sub.text === "string") {
+              sub.text = sub.text
+                .replace(/^[\s\n]*(?:(?:\d+[a-z])|[\(\[]?[a-z][\)\]\.])\s*/i, "")
+                .replace(/^[\(\[]?(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)[\)\]\.]\s*/i, "")
+                .trim();
             }
           });
         }
@@ -329,21 +371,23 @@ CRITICAL OCR & TRANSCRIPTION RULES:
 2. PRESERVE INTENT & SUBJECT:
    - Identify or retain the subject (${hintSubject}) and class level (${hintClass}).
    - Transcribe all questions in Section A (Objectives) and Section B (Essay/Theory/Structured).
-3. MULTIPLE-CHOICE (SECTION A) SANITIZATION:
-   - Extract question stems and options (a, b, c, d).
+3. MULTIPLE-CHOICE (SECTION A) QUESTION COUNT & SANITIZATION:
+   - Extract and transcribe ALL objective questions present in the image(s).
+   - The total number of Section A questions MUST ALWAYS MATCH the exact number of objective questions in the image (e.g. if 30 are in the image, transcribe 30; if 40 are in the image, transcribe 40).
    - In each option object, the 'text' property MUST strictly contain ONLY the choice text. STRIP any leading option letters like "(a)", "[A]", "a)", "A.", "(a)(A)", etc.
    - If multiple-choice options are listed on the same line or in columns, separate them cleanly into the options array.
-4. ESSAY / THEORY (SECTION B) STRUCTURING:
-   - Group numbered essay questions (e.g., 1, 2, 3...) and their sub-questions (e.g., (a), (b), (i), (ii)) properly.
-   - Preserve allocated marks (e.g. "[5 marks]") if present.
+4. ESSAY / THEORY (SECTION B) CONSTANT 5 OR 6 QUESTIONS:
+   - Section B MUST ALWAYS contain a CONSTANT OF 5 OR 6 ESSAY QUESTIONS.
+   - If the image contains fewer than 5 essay questions, expand with relevant curriculum questions for ${hintSubject} (${hintClass}) to guarantee a full constant set of 5 or 6 essay questions.
+   - Group numbered essay questions (e.g., 1, 2, 3, 4, 5, 6) and their sub-questions (e.g., (a), (b), (i), (ii)) properly.
+   - Preserve or add allocated marks (e.g. "[5 marks]").
 5. STANDARDIZATION & ABBREVIATION EXPANSION:
    - Expand shorthand abbreviations: "gov." -> "government", "fed." -> "federal", "const." -> "constitution", "pres." -> "president", "legis." -> "legislature", "dept." -> "department", etc.
    - Ensure interrogative questions end with a question mark (?).
    - Format fill-in-the-blank lines with neat underscores "______".
 6. DEFAULT EXAM SPECIFICATIONS:
-   - Full marks: "60 MARKS" (Section A: 30 marks, Section B: 30 marks) unless explicitly specified otherwise in the image.
    - School Name: "AT-TARBIYYA COMMUNITY COLLEGE" unless another school header is explicitly photographed.
-   - Address: "P.O. BOX 104, OFF ROADS, NIGERIA" (Do NOT include phone numbers or email addresses).
+   - Address: "HOTORO, HABIBU GWARZO STREET, KANO, NIGERIA." (Do NOT include phone numbers or email addresses).
    - Time Allowed: Detect or default to "1 hour 30 mins" or "2 hours".
 
 Return the structured examination JSON conforming to the schema. Also provide 'rawExtractedText' showing the clean transcribed plain text representation.`;
@@ -458,7 +502,9 @@ Return the structured examination JSON conforming to the schema. Also provide 'r
 
     // Clean options in Section A
     if (result.sectionA && Array.isArray(result.sectionA.questions)) {
-      result.sectionA.questions.forEach((q: any) => {
+      result.sectionA.questions.forEach((q: any, qIdx: number) => {
+        q.id = qIdx + 1;
+        q.questionNumber = qIdx + 1;
         if (Array.isArray(q.options)) {
           q.options.forEach((opt: any) => {
             if (typeof opt.text === "string") {
@@ -473,6 +519,29 @@ Return the structured examination JSON conforming to the schema. Also provide 'r
                      .trim();
               }
               opt.text = t;
+            }
+          });
+        }
+      });
+    }
+
+    // Enforce strict sequential question numbering (1, 2, 3, 4, 5, etc.) for Section B in OCR
+    if (result.sectionB && Array.isArray(result.sectionB.questions)) {
+      result.sectionB.questions.forEach((eq: any, eqIdx: number) => {
+        eq.questionNumber = `${eqIdx + 1}`;
+        if (typeof eq.text === "string") {
+          eq.text = eq.text
+            .replace(/^[\s\n]*(?:(?:question|q\.?|no\.?)\s*)?(?:\d{1,3}[a-z]?|\d{1,3}\([a-z]\))[.)\-–—:]?\s*/i, "")
+            .replace(/^[a-z][\)\]\.]\s*/i, "")
+            .trim();
+        }
+        if (Array.isArray(eq.subQuestions)) {
+          eq.subQuestions.forEach((sub: any) => {
+            if (typeof sub.text === "string") {
+              sub.text = sub.text
+                .replace(/^[\s\n]*(?:(?:\d+[a-z])|[\(\[]?[a-z][\)\]\.])\s*/i, "")
+                .replace(/^[\(\[]?(?:i|ii|iii|iv|v|vi|vii|viii|ix|x)[\)\]\.]\s*/i, "")
+                .trim();
             }
           });
         }

@@ -19,6 +19,7 @@ import {
   Moon,
   Camera,
   Image as ImageIcon,
+  History,
 } from "lucide-react";
 import { SchoolLogo } from "./SchoolLogo";
 import { extractTextFromFile } from "../utils/fileExtractor";
@@ -29,6 +30,7 @@ import { ExamData } from "../types";
 interface LandingPageProps {
   onProcessAndLaunch: (rawText: string, customConfig?: Partial<ExamData>, useAi?: boolean) => void;
   onOpenImageModal?: () => void;
+  onOpenHistoryModal?: () => void;
   isAiLoading: boolean;
   theme?: "light" | "dark";
   onToggleTheme?: () => void;
@@ -98,7 +100,16 @@ Instruction: Answer any THREE (3) questions. Each carries 10 marks.
 (b) Discuss four preventive measures against cultism in secondary schools. [7 marks]
 
 3. (a) Differentiate between civic rights and civic responsibilities. [4 marks]
-(b) List three consequences of political apathy in Nigeria. [6 marks]`,
+(b) List three consequences of political apathy in Nigeria. [6 marks]
+
+4. (a) Define Citizenship and outline three modes of acquiring Nigerian citizenship. [5 marks]
+(b) Explain five obligations of a responsible citizen in Nigeria. [5 marks]
+
+5. (a) What is Capitalist Democracy? [4 marks]
+(b) Enumerate six characteristics of a democratic system of government. [6 marks]
+
+6. (a) Define Human Trafficking and state three causes. [5 marks]
+(b) Highlight five government agencies in Nigeria fighting social vices and human trafficking. [5 marks]`,
   },
   {
     id: "irs_ss2",
@@ -146,18 +157,32 @@ c) 1/8
 d) 1/3
 
 SECTION B: ESSAY QUESTIONS
-Instruction: Answer Question 1 and any other TWO questions.
+Instruction: Answer any THREE (3) questions in this section. Each question carries 10 marks.
 
 1. (a) Translate Surah Al-Hujurat verses 10-12. [5 marks]
 (b) Highlight four lessons derived from the verses regarding brotherhood and social ethics. [5 marks]
 
 2. (a) Define Sunnah and state its three classifications. [4 marks]
-(b) Explain the role of Sunnah in explaining ambiguous Qur'anic injunctions with two examples. [6 marks]`,
+(b) Explain the role of Sunnah in explaining ambiguous Qur'anic injunctions with two examples. [6 marks]
+
+3. (a) Explain the major differences between Hadith Sahih and Hadith Da'if. [5 marks]
+(b) Describe the three stages in the historical compilation of the Holy Qur'an. [5 marks]
+
+4. (a) Define Shari'ah and list its four fundamental sources. [5 marks]
+(b) Highlight the contribution of Caliph Umar ibn Al-Khattab to Islamic administrative justice. [5 marks]
+
+5. (a) What is Zakat? Mention four categories of people entitled to receive Zakat according to Surah At-Tawbah. [6 marks]
+(b) Distinguish between Zakat and Sadaqah in Islamic practice. [4 marks]
+
+6. (a) Explain the concept of Nikah (Marriage) in Islam and state four conditions for its validity. [6 marks]
+(b) Outline the rights and duties of spouses toward each other in Islam. [4 marks]`,
   },
 ];
 
 export const LandingPage: React.FC<LandingPageProps> = ({
   onProcessAndLaunch,
+  onOpenImageModal,
+  onOpenHistoryModal,
   isAiLoading,
   theme = "light",
   onToggleTheme,
@@ -404,6 +429,23 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 Standard: Times New Roman 12pt (1.15)
               </span>
             </div>
+
+            {/* History Quick Access Button */}
+            {onOpenHistoryModal && (
+              <button
+                id="btn-landing-history"
+                onClick={onOpenHistoryModal}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition border ${
+                  isDark
+                    ? "bg-slate-800 hover:bg-slate-700 text-amber-300 border-slate-700"
+                    : "bg-slate-100 hover:bg-slate-200 text-amber-800 border-slate-300 shadow-2xs"
+                }`}
+                title="View previous exam papers and generation history"
+              >
+                <History className="w-3.5 h-3.5 text-amber-500" />
+                <span className="hidden sm:inline">Exam History</span>
+              </button>
+            )}
 
             {/* Light / Dark Mode Toggle Button */}
             {onToggleTheme && (

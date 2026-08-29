@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Navbar } from "./components/Navbar";
 import { Toolbar } from "./components/Toolbar";
+import { ExamProgressBar } from "./components/ExamProgressBar";
 import { ExamPaper } from "./components/ExamPaper";
 import { LandingPage } from "./components/LandingPage";
 import { PasteInputModal } from "./components/PasteInputModal";
 import { CorrectorAuditModal } from "./components/CorrectorAuditModal";
-import { MarkingSchemeModal } from "./components/MarkingSchemeModal";
+import { AnswerKeyPdfModal } from "./components/AnswerKeyPdfModal";
 import { SchoolInfoModal } from "./components/SchoolInfoModal";
 import { QuestionEditModal } from "./components/QuestionEditModal";
 import { ImageOcrModal } from "./components/ImageOcrModal";
+import { HistoryModal } from "./components/HistoryModal";
 import { ExamData, AuditReport, ObjectiveQuestion, EssayQuestion } from "./types";
 import { INITIAL_EXAM_DATA, AT_TARBIYYA_GOVERNMENT_RAW } from "./utils/sampleData";
 import { parseAndModerateExam, proofreadExamInPlace, serializeExamToText, cleanOptionText } from "./utils/parser";
 import { exportExamToPDF, printExamPaper } from "./utils/pdfExport";
+import { getExamHistory, saveExamToHistory } from "./utils/historyStorage";
 import confetti from "canvas-confetti";
-import { CheckCircle2, AlertCircle, Sparkles, FileText, Download } from "lucide-react";
+import { CheckCircle2, AlertCircle, Sparkles, FileText, Download, Camera, KeyRound } from "lucide-react";
 
 export default function App() {
   const [currentView, setCurrentView] = useState<"landing" | "workspace">("landing");
@@ -67,17 +70,67 @@ export default function App() {
   const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
   const [isMarkingModalOpen, setIsMarkingModalOpen] = useState(false);
   const [isSchoolModalOpen, setIsSchoolModalOpen] = useState(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [historyCount, setHistoryCount] = useState(() => getExamHistory().length);
   const [editingQuestion, setEditingQuestion] = useState<ObjectiveQuestion | null>(null);
 
   // Zoom & UI state
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const toggleTheme = () => setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  const [zoom, setZoom] = useState(1.0);
+  const [zoom, setZoom] = useState(() => {
+    if (typeof window !== "undefined") {
+      const docWidth = 794;
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 820) {
+        const availableWidth = screenWidth - (screenWidth < 640 ? 16 : 48);
+        return Math.min(1.0, Math.max(0.38, Number((availableWidth / docWidth).toFixed(2))));
+      }
+    }
+    return 1.0;
+  });
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [isExportingPDF, setIsExportingPDF] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarInputText, setSidebarInputText] = useState("");
+
+  const baseDocWidth = examData.pageOrientation === "landscape" ? 1123 : 794;
+  const [paperHeight, setPaperHeight] = useState<number>(1123);
+  const paperRef = useRef<HTMLDivElement>(null);
+
+  // Monitor and synchronize exact paper height for zero-cutoff scaling
+  useEffect(() => {
+    if (!paperRef.current) return;
+    const updateHeight = () => {
+      if (paperRef.current) {
+        setPaperHeight(paperRef.current.offsetHeight);
+      }
+    };
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(paperRef.current);
+    return () => observer.disconnect();
+  }, [examData, zoom]);
+
+  // Auto-fit screen width for mobile and tablet devices
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== "undefined" && window.innerWidth < 820) {
+        const docWidth = examData.pageOrientation === "landscape" ? 1123 : 794;
+        const availableWidth = window.innerWidth - (window.innerWidth < 640 ? 16 : 48);
+        if (availableWidth < docWidth) {
+          const fitScale = Math.min(1.0, Math.max(0.35, Number((availableWidth / docWidth).toFixed(2))));
+          setZoom(fitScale);
+        }
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [examData.pageOrientation]);
+
+  const updateHistoryBadge = () => {
+    setHistoryCount(getExamHistory().length);
+  };
 
   useEffect(() => {
     if (theme === "dark") {
@@ -104,6 +157,9 @@ export default function App() {
     const { exam, audit } = parseAndModerateExam(rawText, baseData);
     setExamData(exam);
     setAuditReport(audit);
+    // Auto save to history
+    saveExamToHistory(exam, "paste_import", undefined, audit);
+    updateHistoryBadge();
     showToast(`Moderated & Formatted ${audit.totalQuestions} questions with ${audit.corrections.length} auto-corrections!`);
     confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
   };
@@ -112,7 +168,7 @@ export default function App() {
   const handleApplyImageExam = (exam: ExamData, rawText: string) => {
     setExamData(exam);
     const totalQ = (exam.sectionA.questions.length || 0) + (exam.sectionB.questions.length || 0);
-    setAuditReport({
+    const audit: AuditReport = {
       timestamp: new Date().toLocaleTimeString(),
       totalQuestions: totalQ,
       sectionACount: exam.sectionA.questions.length,
@@ -128,7 +184,11 @@ export default function App() {
       ],
       qualityScore: 99,
       examinerComments: `Successfully converted ${totalQ} questions from image to standard WAEC/NECO paper.`,
-    });
+    };
+    setAuditReport(audit);
+    // Auto save snapshot to history
+    saveExamToHistory(exam, "ocr_scan", undefined, audit);
+    updateHistoryBadge();
     setCurrentView("workspace");
     showToast(`Transcribed & Loaded ${totalQ} questions from image paper!`);
     confetti({ particleCount: 80, spread: 80, origin: { y: 0.6 } });
@@ -153,6 +213,8 @@ export default function App() {
       const { exam, audit } = parseAndModerateExam(rawText, updatedBase);
       setExamData(exam);
       setAuditReport(audit);
+      saveExamToHistory(exam, "paste_import", undefined, audit);
+      updateHistoryBadge();
       setCurrentView("workspace");
       showToast(`Exam loaded with ${audit.totalQuestions} questions & ${audit.corrections.length} auto-corrections!`);
       confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
@@ -217,8 +279,7 @@ export default function App() {
           description: c,
         }));
 
-        setExamData(updatedExam);
-        setAuditReport({
+        const finalAudit: AuditReport = {
           timestamp: new Date().toLocaleTimeString(),
           totalQuestions: (updatedExam.sectionA.questions.length || 0) + (updatedExam.sectionB.questions.length || 0),
           sectionACount: updatedExam.sectionA.questions.length,
@@ -227,7 +288,12 @@ export default function App() {
           corrections: [...auditReport.corrections, ...newCorrections],
           qualityScore: aiResult.moderationSummary?.qualityScore || 99,
           examinerComments: aiResult.moderationSummary?.examinerComments || "AI Academic spellcheck and sentence proofreading complete.",
-        });
+        };
+
+        setExamData(updatedExam);
+        setAuditReport(finalAudit);
+        saveExamToHistory(updatedExam, "ai_moderate", undefined, finalAudit);
+        updateHistoryBadge();
 
         setIsPasteModalOpen(false);
         showToast("AI Proofreading complete! Spelling & sentences auto-corrected.");
@@ -239,10 +305,13 @@ export default function App() {
         } else {
           const { exam, audit } = proofreadExamInPlace(examData);
           setExamData(exam);
-          setAuditReport({
+          const combinedAudit = {
             ...audit,
             corrections: [...auditReport.corrections, ...audit.corrections],
-          });
+          };
+          setAuditReport(combinedAudit);
+          saveExamToHistory(exam, "ai_moderate", undefined, combinedAudit);
+          updateHistoryBadge();
           showToast(`Proofread complete: ${audit.corrections.length} spelling & grammar improvements applied!`);
         }
       }
@@ -253,15 +322,45 @@ export default function App() {
       } else {
         const { exam, audit } = proofreadExamInPlace(examData);
         setExamData(exam);
-        setAuditReport({
+        const combinedAudit = {
           ...audit,
           corrections: [...auditReport.corrections, ...audit.corrections],
-        });
+        };
+        setAuditReport(combinedAudit);
+        saveExamToHistory(exam, "ai_moderate", undefined, combinedAudit);
+        updateHistoryBadge();
         showToast(`Proofread complete: ${audit.corrections.length} spelling & grammar improvements applied!`);
       }
     } finally {
       setIsAiLoading(false);
     }
+  };
+
+  // Manual snapshot bookmarking
+  const handleSaveSnapshot = () => {
+    const title = `${examData.subject || "EXAM"} — ${examData.classLevel || "CLASS"} (Saved)`;
+    saveExamToHistory(examData, "manual_snapshot", title, auditReport);
+    updateHistoryBadge();
+    showToast(`Saved snapshot to History!`);
+    confetti({ particleCount: 40, spread: 50, origin: { y: 0.8 } });
+  };
+
+  // Restore revision from history
+  const handleRestoreFromHistory = (restoredExam: ExamData, sourceTitle: string) => {
+    setExamData(restoredExam);
+    const totalQ = (restoredExam.sectionA?.questions?.length || 0) + (restoredExam.sectionB?.questions?.length || 0);
+    setAuditReport({
+      timestamp: new Date().toLocaleTimeString(),
+      totalQuestions: totalQ,
+      sectionACount: restoredExam.sectionA?.questions?.length || 0,
+      sectionBCount: restoredExam.sectionB?.questions?.length || 0,
+      totalCalculatedMarks: parseInt(restoredExam.fullMarks) || 60,
+      corrections: auditReport.corrections,
+      qualityScore: 99,
+      examinerComments: `Restored snapshot "${sourceTitle}".`,
+    });
+    showToast(`Restored "${sourceTitle}" to active workspace!`);
+    confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
   };
 
   // PDF Export
@@ -272,7 +371,7 @@ export default function App() {
       const cleanSub = examData.subject.replace(/[^a-zA-Z0-9]/g, "_");
       const cleanClass = examData.classLevel.replace(/[^a-zA-Z0-9]/g, "_");
       const filename = `The_Moderator_AT_TARBIYYA_${cleanSub}_${cleanClass}.pdf`;
-      await exportExamToPDF("exam-paper-printable", filename);
+      await exportExamToPDF("exam-paper-printable", filename, examData.pageOrientation || "portrait");
       showToast("PDF Downloaded successfully!");
       confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 } });
     } catch (e: any) {
@@ -289,17 +388,25 @@ export default function App() {
   };
 
   const handleUpdateExamData = (updated: Partial<ExamData>) => {
-    setExamData((prev) => ({ ...prev, ...updated }));
+    setExamData((prev) => {
+      const next = { ...prev, ...updated };
+      return next;
+    });
   };
 
   const handleSaveQuestion = (updated: ObjectiveQuestion) => {
-    setExamData((prev) => ({
-      ...prev,
-      sectionA: {
-        ...prev.sectionA,
-        questions: prev.sectionA.questions.map((q) => (q.id === updated.id ? updated : q)),
-      },
-    }));
+    setExamData((prev) => {
+      const next = {
+        ...prev,
+        sectionA: {
+          ...prev.sectionA,
+          questions: prev.sectionA.questions.map((q) => (q.id === updated.id ? updated : q)),
+        },
+      };
+      saveExamToHistory(next, "quick_edit", `${next.subject} — Q${updated.questionNumber} Edited`, auditReport);
+      updateHistoryBadge();
+      return next;
+    });
     showToast(`Updated Question ${updated.questionNumber}!`);
   };
 
@@ -319,6 +426,7 @@ export default function App() {
         <LandingPage
           onProcessAndLaunch={handleProcessAndLaunch}
           onOpenImageModal={() => setIsImageModalOpen(true)}
+          onOpenHistoryModal={() => setIsHistoryModalOpen(true)}
           isAiLoading={isAiLoading}
           theme={theme}
           onToggleTheme={toggleTheme}
@@ -332,11 +440,13 @@ export default function App() {
             onOpenAuditModal={() => setIsAuditModalOpen(true)}
             onOpenMarkingModal={() => setIsMarkingModalOpen(true)}
             onOpenSchoolModal={() => setIsSchoolModalOpen(true)}
+            onOpenHistoryModal={() => setIsHistoryModalOpen(true)}
             onDownloadPDF={handleDownloadPDF}
             onPrint={handlePrint}
             onAiModerate={() => handleAiModerate()}
             isAiLoading={isAiLoading}
             correctionCount={auditReport.corrections.length}
+            historyCount={historyCount}
             subject={examData.subject}
             classLevel={examData.classLevel}
             isSidebarOpen={isSidebarOpen}
@@ -354,6 +464,16 @@ export default function App() {
             onZoomChange={setZoom}
             totalQuestions={totalQuestions}
             totalMarks={examData.fullMarks}
+            theme={theme}
+          />
+
+          {/* Visual Progress Bar Tracking School Info & Total Marks Completion */}
+          <ExamProgressBar
+            examData={examData}
+            onOpenSchoolModal={() => setIsSchoolModalOpen(true)}
+            onOpenAuditModal={() => setIsAuditModalOpen(true)}
+            onOpenHistoryModal={() => setIsHistoryModalOpen(true)}
+            onSaveSnapshot={handleSaveSnapshot}
             theme={theme}
           />
 
@@ -415,43 +535,89 @@ export default function App() {
             )}
 
             {/* Paper Preview Canvas Area */}
-            <section className={`flex-1 ${theme === "dark" ? "bg-slate-950" : "bg-[#f0f2f5]"} p-4 sm:p-8 overflow-auto flex flex-col items-center transition-colors duration-200`}>
+            <section className={`flex-1 ${theme === "dark" ? "bg-slate-950" : "bg-[#f0f2f5]"} p-2 sm:p-6 md:p-8 overflow-x-auto overflow-y-auto flex flex-col items-center transition-colors duration-200 w-full`}>
               {/* Live Preview Indicator Header */}
-              <div className="w-full max-w-[210mm] flex justify-between items-center mb-4 text-xs font-medium text-slate-500 px-1 no-print">
+              <div className={`w-full ${examData.pageOrientation === "landscape" ? "max-w-[297mm]" : "max-w-[210mm]"} flex justify-between items-center mb-3 text-xs font-medium text-slate-500 px-1 no-print transition-all duration-200`}>
                 <span className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
-                  A4 Live Preview — Times New Roman {examData.fontSize} ({examData.lineSpacing} Line Spacing)
+                  A4 {examData.pageOrientation === "landscape" ? "Landscape" : "Portrait"} Live Preview — Times New Roman {examData.fontSize} ({examData.lineSpacing} Line Spacing)
                 </span>
                 <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
                   At-Tarbiyya Community College Standard
                 </span>
               </div>
 
-              <div
-                className="transition-transform duration-150 origin-top shadow-2xl rounded-xs mb-12"
-                style={{ transform: `scale(${zoom})` }}
-              >
-                <ExamPaper
-                  examData={examData}
-                  onEditQuestion={(q) => setEditingQuestion(q)}
-                />
+              {/* Responsive Centered Paper Stage with Zero Left-Clipping */}
+              <div className="w-full flex justify-center items-start overflow-x-auto py-2 px-1">
+                <div
+                  className="relative transition-all duration-150"
+                  style={{
+                    width: `${Math.round(baseDocWidth * zoom)}px`,
+                    height: `${Math.round(paperHeight * zoom)}px`,
+                    minWidth: `${Math.round(baseDocWidth * zoom)}px`,
+                    maxWidth: "100%",
+                    marginBottom: "3rem",
+                  }}
+                >
+                  <div
+                    ref={paperRef}
+                    className="shadow-2xl rounded-xs transition-transform duration-150 absolute top-0 left-0"
+                    style={{
+                      transform: `scale(${zoom})`,
+                      transformOrigin: "top left",
+                      width: `${baseDocWidth}px`,
+                      minWidth: `${baseDocWidth}px`,
+                    }}
+                  >
+                    <ExamPaper
+                      examData={examData}
+                      onEditQuestion={(q) => setEditingQuestion(q)}
+                    />
+                  </div>
+                </div>
               </div>
             </section>
           </main>
 
           {/* Floating Action Bar on Mobile/Tablet */}
-          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2 bg-[#1e293b]/95 backdrop-blur-md px-4 py-2 rounded-full border border-slate-700 shadow-2xl lg:hidden no-print">
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-1.5 bg-[#1e293b]/95 backdrop-blur-md px-3 py-2 rounded-full border border-slate-700 shadow-2xl lg:hidden no-print max-w-[95vw] overflow-x-auto no-scrollbar">
+            <button
+              onClick={() => {
+                const docWidth = examData.pageOrientation === "landscape" ? 1123 : 794;
+                const availableWidth = window.innerWidth - 24;
+                const fitScale = Math.min(1.0, Math.max(0.35, Number((availableWidth / docWidth).toFixed(2))));
+                setZoom(zoom === 1.0 ? fitScale : 1.0);
+              }}
+              className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 shadow-xs cursor-pointer shrink-0"
+              title="Toggle Fit to Screen or 100% Zoom"
+            >
+              <span className="text-[11px]">{zoom < 0.95 ? "100%" : "Fit"}</span>
+            </button>
             <button
               onClick={() => setIsPasteModalOpen(true)}
-              className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-600 text-white shadow-sm"
+              className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-sm shrink-0"
             >
               <FileText className="w-3.5 h-3.5 mr-1" />
               Paste
             </button>
             <button
+              onClick={() => setIsImageModalOpen(true)}
+              className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm shrink-0"
+            >
+              <Camera className="w-3.5 h-3.5 mr-1" />
+              Photo
+            </button>
+            <button
+              onClick={() => setIsMarkingModalOpen(true)}
+              className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold bg-amber-600 hover:bg-amber-500 text-white shadow-sm shrink-0"
+            >
+              <KeyRound className="w-3.5 h-3.5 mr-1" />
+              Keys
+            </button>
+            <button
               onClick={handleDownloadPDF}
               disabled={isExportingPDF}
-              className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-600 text-white shadow-sm"
+              className="inline-flex items-center px-2.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm shrink-0 disabled:opacity-50"
             >
               <Download className="w-3.5 h-3.5 mr-1" />
               PDF
@@ -471,14 +637,16 @@ export default function App() {
             isOpen={isAuditModalOpen}
             onClose={() => setIsAuditModalOpen(false)}
             audit={auditReport}
+            examData={examData}
             subject={examData.subject}
             classLevel={examData.classLevel}
           />
 
-          <MarkingSchemeModal
+          <AnswerKeyPdfModal
             isOpen={isMarkingModalOpen}
             onClose={() => setIsMarkingModalOpen(false)}
             examData={examData}
+            theme={theme}
           />
 
           <SchoolInfoModal
@@ -494,6 +662,18 @@ export default function App() {
             question={editingQuestion}
             onSave={handleSaveQuestion}
           />
+
+          {/* Question Paper Revision & Generation History Modal */}
+          <HistoryModal
+            isOpen={isHistoryModalOpen}
+            onClose={() => {
+              setIsHistoryModalOpen(false);
+              updateHistoryBadge();
+            }}
+            currentExam={examData}
+            onRestoreExam={handleRestoreFromHistory}
+            theme={theme}
+          />
         </>
       )}
 
@@ -506,6 +686,23 @@ export default function App() {
         initialClassLevel={examData.classLevel}
         theme={theme}
       />
+
+      {/* Also allow History Modal from Landing Page if user opens it */}
+      {currentView === "landing" && (
+        <HistoryModal
+          isOpen={isHistoryModalOpen}
+          onClose={() => {
+            setIsHistoryModalOpen(false);
+            updateHistoryBadge();
+          }}
+          currentExam={examData}
+          onRestoreExam={(restored, title) => {
+            handleRestoreFromHistory(restored, title);
+            setCurrentView("workspace");
+          }}
+          theme={theme}
+        />
+      )}
     </div>
   );
 }

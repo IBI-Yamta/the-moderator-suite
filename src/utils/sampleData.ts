@@ -106,6 +106,15 @@ Instruction: Answer any THREE (3) questions. Each question carries 10 marks. Sho
 3a. Construct a frequency distribution table for the following test scores: 12, 15, 12, 18, 20, 15, 12, 14, 18, 20. [5 marks]
 3b. Calculate the median and mode of the distribution. [5 marks]
 
+4a. If 12 men can weed a field in 6 days, how many days will 9 men take to weed the same field working at the same rate? [5 marks]
+4b. Express 0.000348 in standard scientific notation correct to 2 significant figures. [5 marks]
+
+5a. A trader bought an article for N15,000 and sold it for N18,500. Calculate the percentage profit. [5 marks]
+5b. Calculate the simple interest on N80,000 for 3 years at 7.5% per annum. [5 marks]
+
+6a. The angles of a quadrilateral are (3x - 10)°, (2x + 30)°, (x + 40)°, and (2x)°. Find the value of x. [6 marks]
+6b. State three (3) geometric properties of a rhombus. [4 marks]
+
 DO NOT WRITE ON THIS QUESTION PAPER.`;
 
 export const ENGLISH_SAMPLE_RAW = `FIRST TERM EXAMINATION 2026/2027 ACADEMIC SESSION
@@ -123,10 +132,16 @@ Instruction: From the words lettered A to D, choose the word that is nearest in 
 5. His speech was concise and straight to the point(A)brief(B)elaborate(C)wordy(D)tedious
 
 SECTION B: ESSAY QUESTIONS [30 MARKS]
-Instruction: Answer TWO questions in all. One from Part 1 and Question 3 in Part 2.
+Instruction: Answer any THREE (3) questions in this section. Each question carries 10 marks.
 
-1. Write a letter to your principal explaining the need for an upgraded ICT laboratory in your school. [15 marks]
-2. Write an article for publication in your school magazine on the topic: "The Importance of Discipline in Academic Success". [15 marks]
+1a. Write a letter to your principal explaining the need for an upgraded ICT laboratory in your school. [10 marks]
+2a. Write an article suitable for publication in your national newspaper on the topic: "The Menace of Examination Malpractice in Secondary Schools". [10 marks]
+3a. Write a speech you would deliver to your fellow students on "The Importance of Time Management and Academic Discipline". [10 marks]
+4a. Write a story ending with the statement: "Had I known, I would have listened to my parents' advice." [10 marks]
+5a. Explain five (5) grammatical functions of the noun phrase in English sentence structure with one example for each. [10 marks]
+6a. Identify and explain the figures of speech used in the following sentences: [10 marks]
+i. The wind whispered secrets through the trees.
+ii. He fought like a wounded lion on the battlefield.
 
 DO NOT WRITE ON THIS QUESTION PAPER.`;
 
@@ -582,4 +597,5 @@ export const INITIAL_EXAM_DATA: ExamData = {
   lineSpacing: "1.15",
   fontFamily: "Times New Roman",
   optionsLinear: true,
+  pageOrientation: "portrait",
 };
